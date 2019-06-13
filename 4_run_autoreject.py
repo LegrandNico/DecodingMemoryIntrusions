@@ -5,11 +5,12 @@ import matplotlib.pyplot as plt
 import mne
 import os
 
-root = 'D:/'
-Names = os.listdir(root + 'EEG/')  # Subjects ID
+root = 'E:/EEG_wd/Machine_learning/'
+Names = os.listdir(root + task + '/1_raw')  # Subjects ID
+Names       = sorted(list(set([subject[:5] for subject in Names])))
 
 
-def run_autoreject(subject):
+def run_autoreject(subject, task):
     """Interpolate bad epochs/sensors using Autoreject.
 
     Parameters
@@ -33,12 +34,12 @@ def run_autoreject(subject):
 
     """
     # Import data
-    input_path = root + '/4_ICA/' + subject + '-epo.fif'
+    input_path = root + task + '/4_ICA/' + subject + '-epo.fif'
     epochs = mne.read_epochs(input_path)
 
     # Autoreject
     ar = AutoReject(random_state=42,
-                    n_jobs=1)
+                    n_jobs=6)
 
     ar.fit_transform(epochs)
     epochs_clean = ar.transform(epochs)
@@ -58,17 +59,17 @@ def run_autoreject(subject):
     evoked_clean.plot(exclude=[], axes=axes[1], ylim=[-30, 30])
     axes[1].set_title('After autoreject')
     plt.tight_layout()
-    plt.savefig(root + '/5_autoreject/' +
-                subject + '-autoreject.svg')
+    plt.savefig(root + task + '/5_autoreject/' +
+                subject + '-autoreject.png')
     plt.close()
 
     # Plot heatmap
     ar.get_reject_log(epochs).plot()
-    plt.savefig(root + '/5_autoreject/' + subject + '-heatmap.svg')
+    plt.savefig(root + task + '/5_autoreject/' + subject + '-heatmap.png')
     plt.close()
 
     # Save epoch data
-    out_epoch = root + '/5_autoreject/' + subject + '-epo.fif'
+    out_epoch = root + task + '/5_autoreject/' + subject + '-epo.fif'
     epochs_clean.save(out_epoch)
 
 
@@ -76,4 +77,5 @@ def run_autoreject(subject):
 if __name__ == '__main__':
 
     for subject in Names:
-        run_autoreject(subject)
+#        for task in ['TNT', 'Attention']:
+        run_autoreject(subject, task)

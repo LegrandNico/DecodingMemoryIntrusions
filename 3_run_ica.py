@@ -6,23 +6,26 @@ from mne.preprocessing import ICA
 import numpy as np
 import os
 
-root = 'E:/EEG_wd/Machine_learning/TNT/'
+root = 'E:/EEG_wd/Machine_learning/'
 Names = os.listdir(root + 'All_frequencies_multitaper')  # Subjects ID
 Names       = sorted(list(set([subject[:5] for subject in Names])))
 
 
-def run_ICA(subject):
+def run_ICA(subject, task):
     """Correct epochs for EOG artifacts.
 
     Parameters
     ----------
     *subject: string
         The participant reference
+    
+    *task: string
+        The file to open ('Attention' or 'TNT')
 
     Save the resulting *-epo.fif file in the '/4_ICA' directory.
 
     """
-    input_path = root + '3_epochs/' + subject + 'clean-epo.fif'
+    input_path = root + task + '/3_epochs/' + subject + 'clean-epo.fif'
     epochs = mne.read_epochs(input_path)
 
     # Fit ICA
@@ -34,9 +37,8 @@ def run_ICA(subject):
     ica.fit(epochs, picks=picks, decim=10)
 
     # Uncomment to manually select ICA components
-    # ica.plot_components()
+    # ica.plot_components(picks=range(12), inst=epochs)
     # eog_inds = ica.exclude
-    # ica.plot_components(picks=range(25), inst=epochs)
 
     # List of bad component to reject
     eog_inds = []
@@ -52,11 +54,11 @@ def run_ICA(subject):
         axs[i].axhline(y=-0.5, linestyle='--', color='r')
         axs[i].axhline(y=0.5, linestyle='--', color='r')
 
+## Comment for manual selection
 #        for i in inds:
 #            if not i in eog_inds:
 #                eog_inds.append(i)
-    plt.title('Rejected: ' + str(eog_inds))
-    plt.savefig(root + '/4_ICA/' + subject + '-scores.png')
+    plt.savefig(root + task + '/4_ICA/' + subject + '-scores.png')
     plt.clf()
     plt.close()
 
@@ -64,7 +66,7 @@ def run_ICA(subject):
     ica_plot = ica.plot_components(show=False)
     for i, plot in enumerate(ica_plot):
         plot
-        plt.savefig(root + '/4_ICA/' + subject + str(i) + '-ica.png')
+        plt.savefig(root + task + '/4_ICA/' + subject + str(i) + '-ica.png')
         plt.clf()
         plt.close()
 
@@ -73,11 +75,12 @@ def run_ICA(subject):
     ica.apply(epochs)
 
     # Save epochs
-    epochs.save(root + '/4_ICA/' + subject + '-epo.fif')
+    epochs.save(root + task + '/4_ICA/' + subject + '-epo.fif')
 
 
 # Loop across subjects
 if __name__ == '__main__':
 
     for subject in Names:
-        run_ICA(subject)
+#        for task in ['Attention', 'TNT']:
+        run_ICA(subject, task)
