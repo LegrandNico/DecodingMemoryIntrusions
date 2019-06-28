@@ -89,13 +89,12 @@ def shuffled_training_labels(subject, n_boot):
     shuffled = np.asarray(shuffled)
 
     # 95th percentile
-    ci = np.percentile(shuffled[:, :, :, :, 1], 95.0, axis = 0)
+    ci = np.percentile(shuffled[:, :, :, :, 1], 97.5, axis = 0)
 
     np.save(root  + 'Results/Shuffled_95CI/' + subject + '-high.npy', ci)
 
 # %% Run
 if __name__ == '__main__':
     
-    for subject in Names:
-        
+    for subject in Names[2:]:
         shuffled_training_labels(subject, n_boot = 200)

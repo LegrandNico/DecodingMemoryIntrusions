@@ -89,7 +89,7 @@ def extract_time_locked(subject, exclude_peak, info):
     data = proba[:, time, :, 1] # Select the probabilities of an intrusion
     ci = high_CI[:, time, :]
 
-    time_locked_TFR, time_locked_TFR_NI, time_locked_TFR_peak_NI = [], [], [] # Store the ntrials time-locked tfr, baseline, and non intrusion peaks
+    time_locked_TFR, time_locked_TFR_NI = [], [] # Store the ntrials time-locked tfr and baseline
     
     for ii in range(len(data)):
 
@@ -105,66 +105,36 @@ def extract_time_locked(subject, exclude_peak, info):
             # Label as an intrusion if the peak > 95% CI
             for id in indexes:
 
-                if (id > exclude_peak+120) & (id < 260): # Exclude peak < 0.4s & > 2.5s after stim presentation
+                if (id > exclude_peak) & (id < 240): # Exclude peak < 0.4s & > 2.5s after stim presentation
 
                     # Check that peak > 95 CI
                     if (data[ii, id] > (ci[ii, id])) & (data[ii, id+1] > (ci[ii, id+1])) & (data[ii, id+2] > (ci[ii, id+2])):
 
                         # Select time locked representation for non intrusive trials in similar time points
-                        baseline_tfr = tfr[tnt_df['Black.RESP'] == 1, :, :, id-(exclude_peak+20):id+60].mean(0)
+                        baseline_tfr = tfr[tnt_df['Black.RESP'] == 1, :, :, id-20:id+80].mean(0)
 
                         # Extract the TFR for the intrusive trial
-                        intrusive_tfr = tfr[ii, :, :, id-(exclude_peak+20):id+60]
+                        intrusive_tfr = tfr[ii, :, :, id-20:id+80]
 
                         time_locked_TFR.append(intrusive_tfr) # Time-locked
                         time_locked_TFR_NI.append(baseline_tfr) # Time-locked
-#        else:
-#            # Extract the peak of non intrusions
-#            id = np.argmin(data[ii, :])
-#            if (id > exclude_peak) & (id < 260): # Exclude peak < 0.4s & > 2.5s after stim presentation
-#
-#                # Extract the TFR for the intrusive trial
-#                nonintrusive_peak_tfr = tfr[ii, :, :, id-(exclude_peak):id+60]
-#                time_locked_TFR_peak_NI.append(nonintrusive_peak_tfr) # Time-locked
 
     if len(time_locked_TFR)>5:
-#        np.save(root + '/Results/Time-locked/' + subject + '_TimeLockedNonIntrusion.npy', np.asarray(time_locked_TFR_peak_NI).mean(0))
-        
         
         # Baseline correction
         this_tfr = mne.time_frequency.EpochsTFR(info=info, 
-                                                data=np.asarray(time_locked_TFR), # - np.asarray(baseline).mean(0),
-                                                times=np.arange(-0.6, 0.6, 0.01),
+                                                data=np.asarray(time_locked_TFR),
+                                                times=np.arange(-0.2, 0.8, 0.01),
                                                 freqs=np.arange(3, 30))
         intrusion = stats.trim_mean(this_tfr.apply_baseline(baseline=(-0.2, 0.), mode='mean')._data, proportiontocut=0.1, axis=0)
         np.save(root + '/Results/Time-locked/' + subject + '_TimeLockedIntrusion_TF.npy', intrusion)
         
-#        this_tfr = mne.time_frequency.EpochsTFR(info=info, 
-#                                                data=np.asarray(time_locked_TFR), # - np.asarray(baseline).mean(0),
-#                                                times=np.arange(-0.6, 0.6, 0.01),
-#                                                freqs=np.arange(3, 30))
-#        baseline = this_tfr.apply_baseline(baseline=(-0.1, 0.1), mode='mean').average()._data       
-#        np.save(root + '/Results/Time-locked/' + subject + '_TimeLockedBaseline_TF.npy',baseline)
-        
-        
-#        # Bootstrp differences
-#        boot_int, boot_base = [], []
-#        for i in range(150):
-#        
-#            id = np.random.randint(0, len(time_locked_TFR), 50)       
-#            boot_int.append(np.asarray(time_locked_TFR)[id].mean(0))
-#        
-##            id = np.random.randint(0, len(time_locked_TFR_NI), 50)       
-##            boot_base.append(np.asarray(time_locked_TFR_NI)[id].mean(0))
-#        
-#        np.save(root + '/Results/Time-locked/' + subject + '_bootstrapped_TF.npy', np.asarray(boot_int).mean(0)) # - np.asarray(boot_base).mean(0))
-        
-
-#diff = this_data[:, 11, 0, :].T
-#plt.plot(diff)
-##
-#diff2 = np.asarray(boot_avg).mean(0)[11, 0, :]
-#plt.plot(diff2 - diff)
+        this_tfr = mne.time_frequency.EpochsTFR(info=info, 
+                                                data=np.asarray(time_locked_TFR_NI),
+                                                times=np.arange(-0.2, 0.8, 0.01),
+                                                freqs=np.arange(3, 30))
+        baseline = stats.trim_mean(this_tfr.apply_baseline(baseline=(-0.2, 0.), mode='mean')._data, proportiontocut=0.1, axis=0)      
+        np.save(root + '/Results/Time-locked/' + subject + '_TimeLockedBaseline_TF.npy',baseline)
 
 # =============================================================================
 # %% Extract global results
@@ -182,16 +152,16 @@ intrusion, baseline=[], []
 for subject in Names:
     try:
         intrusion.append(np.load(root + '/Results/Time-locked/' + subject + '_TimeLockedIntrusion_TF.npy'))
-#        baseline.append(np.load(root + '/Results/Time-locked/' + subject + '_TimeLockedBaseline_TF.npy'))
+        baseline.append(np.load(root + '/Results/Time-locked/' + subject + '_TimeLockedBaseline_TF.npy'))
 
     except:
         print(subject + ' without TFR')
         
        
-this_tfr = mne.time_frequency.AverageTFR(info=this_tfr.info, 
-                                         data=np.asarray(intrusion).mean(0),
+this_tfr = mne.time_frequency.AverageTFR(info=tnt.info,
+                                         data=np.asarray(intrusion).mean(0) - np.asarray(baseline).mean(0),
                                          nave=len(intrusion),
-                                         times=np.arange(-0.6, 0.6, 0.01),
+                                         times=np.arange(-0.2, 0.6, 0.01),
                                          freqs=np.arange(3, 30))
 
 this_tfr.plot()
@@ -202,8 +172,8 @@ this_tfr.plot()
 
 
 this_tfr = mne.time_frequency.EpochsTFR(info=this_tfr.info, 
-                                         data=np.asarray(intrusion), # - np.asarray(baseline),
-                                         times=np.arange(-0.6, 0.6, 0.01),
+                                         data=np.asarray(intrusion) - np.asarray(baseline),
+                                         times=np.arange(-0.2, 0.6, 0.01),
                                          freqs=np.arange(3, 30))
 def tfr_permutation(data, title):
 
@@ -222,11 +192,11 @@ def tfr_permutation(data, title):
     
     plt.figure(figsize=(8, 4))
     plt.imshow(T_obs, cmap=plt.cm.get_cmap('RdBu_r'), vmin=-6, vmax=6,
-               extent=[-0.6, 0.6, 3, 30], interpolation='gaussian',
+               extent=[-0.2, 0.6, 3, 30], interpolation='gaussian',
                aspect='auto', origin='lower')
     clb = plt.colorbar()
     clb.ax.set_title('t values')
-    plt.contour(~np.isnan(T_obs_plot), colors=["w"], extent=[-0.6, 0.6, 3, 30],
+    plt.contour(~np.isnan(T_obs_plot), colors=["w"], extent=[-0.2, 0.6, 3, 30],
                 linewidths=[2], corner_mask=False, antialiased=True, levels=[.5])
     plt.axvline(x=0, linestyle='--', linewidth=2, color='k')
     plt.title(title, size=20, fontweight='bold')
@@ -234,7 +204,9 @@ def tfr_permutation(data, title):
     plt.xlabel('Time (s)', size=15)
 #    plt.savefig(title + '.svg')
 
-data = this_tfr._data.mean(1)
+pick_elec = mne.pick_channels(this_tfr.ch_names, electrodes['Frontal'])
+
+data = this_tfr._data[:,:, :, :].mean(1)
 tfr_permutation(data, 'Time-locked')
 
 # =============================================================================
@@ -245,12 +217,12 @@ def timelocked_topomap(data, freq):
 
     data = data[:, :, freq, :].mean(2)
 
-    fig, axs = plt.subplots(1,6, figsize=(15, 5), facecolor='w', edgecolor='k')
+    fig, axs = plt.subplots(1,7, figsize=(15, 5), facecolor='w', edgecolor='k')
     fig.subplots_adjust(hspace = .5, wspace=.001)
 
     axs = axs.ravel()
 
-    for i, rg in enumerate(np.arange(0, 100, 20)):
+    for i, rg in enumerate(np.arange(10, 70, 10)):
 
         # Load data
         this_data = data[:, :, rg:rg+10].mean(2)
@@ -288,7 +260,7 @@ def timelocked_topomap(data, freq):
                                  this_tfr.average().info, tmin=0.)
 
         evoked.plot_topomap(ch_type='eeg', times=0, scalings=1,
-                            time_format=None, cmap=plt.cm.get_cmap('RdBu_r', 12), vmin=-4., vmax=4,
+                            time_format=None, cmap=plt.cm.get_cmap('RdBu_r', 12), vmin=-3., vmax=3,
                             units='t values', mask = mask, axes = axs[i],
                             size=3, show_names=lambda x: x[4:] + ' ' * 20,
                             time_unit='s', show=False)
@@ -345,11 +317,11 @@ def plot_time_course(data, freq, elec):
     this_data = data[:, pick_elec, :, :].mean(1)
     this_data = this_data[:, freq, :].mean(1)
     df = pd.DataFrame(this_data).melt()
-    df['Time']      = (df.variable / 100) - 0.6
+    df['Time']      = (df.variable / 100) - 0.2
     sns.lineplot(x="Time", y="value", data=df,  ci=68, color = 'r')
     plt.axhline(y=0, linestyle='--', color='b')
 
 # =============================================================================
 # %%
 # =============================================================================
-plot_time_course(data, theta, 'Midline')
+plot_time_course(data, lowbeta, 'Frontal')

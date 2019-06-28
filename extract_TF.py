@@ -24,11 +24,11 @@ root = 'E:/EEG_wd/Machine_learning/'
 def data_tnt(subject):
 
     if subject in ['33FAM', '49STH', '54CCA']:
-        data_path       = 'E:/ENGRAMME/Exclus/GROUPE_2/EEG/'
-        criterion_path  = 'E:/ENGRAMME/Exclus/GROUPE_2/COMPORTEMENT/'
+        data_path = 'E:/ENGRAMME/Exclus/GROUPE_2/EEG/'
+        criterion_path = 'E:/ENGRAMME/Exclus/GROUPE_2/COMPORTEMENT/'
     else:
-        data_path       = 'E:/ENGRAMME/GROUPE_2/EEG/'
-        criterion_path  = 'E:/ENGRAMME/GROUPE_2/COMPORTEMENT/'
+        data_path = 'E:/ENGRAMME/GROUPE_2/EEG/'
+        criterion_path = 'E:/ENGRAMME/GROUPE_2/COMPORTEMENT/'
 
 
     # Load preprocessed epochs
@@ -37,10 +37,10 @@ def data_tnt(subject):
     epochs_TNT.pick_types(emg=False, eeg=True, stim=False, eog=False, misc=False, exclude='bads')
 
     # Load e-prime file
-    eprime_df   = data_path + subject + '/' + subject + '_t.txt'
-    eprime      = pd.read_csv(eprime_df, skiprows = 1, sep='\t')
-    eprime      = eprime[['Cond1', 'Cond2', 'Image.OnsetTime', 'ImageFond', 'Black.RESP', 'ListImage.Cycle']]
-    eprime      = eprime.drop(eprime.index[[97, 195, 293]])
+    eprime_df = data_path + subject + '/' + subject + '_t.txt'
+    eprime = pd.read_csv(eprime_df, skiprows = 1, sep='\t')
+    eprime = eprime[['Cond1', 'Cond2', 'Image.OnsetTime', 'ImageFond', 'Black.RESP', 'ListImage.Cycle']]
+    eprime = eprime.drop(eprime.index[[97, 195, 293]])
     eprime['ListImage.Cycle'] = eprime['ListImage.Cycle'] - 1
     eprime.reset_index(inplace = True)
 
@@ -48,8 +48,8 @@ def data_tnt(subject):
     eprime = eprime[[not i for i in epochs_TNT.drop_log]]
 
     # Remove criterion
-    Criterion   = pd.read_csv(criterion_path + subject + '/TNT/criterion.txt', encoding='latin1', sep='\t', nrows = 78)
-    forgotten   = [ntpath.basename(i) for i in Criterion[' Image'][Criterion[' FinalRecall'] == 0]]
+    Criterion = pd.read_csv(criterion_path + subject + '/TNT/criterion.txt', encoding='latin1', sep='\t', nrows = 78)
+    forgotten = [ntpath.basename(i) for i in Criterion[' Image'][Criterion[' FinalRecall'] == 0]]
 
     if len(forgotten):
         epochs_TNT.drop(eprime['ImageFond'].str.contains('|'.join(forgotten)))
