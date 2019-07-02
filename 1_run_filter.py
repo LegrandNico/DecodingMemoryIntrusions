@@ -3,7 +3,8 @@
 import mne
 import os
 
-out  = 'E:/EEG_wd/Machine_learning/'
+out = 'E:/EEG_wd/Machine_learning/'
+root = 'E:/EEG_wd/Machine_learning/'
 Names = os.listdir(root + 'EEG/')  # Subjects ID
 Names = sorted(list(set([subject[:5] for subject in Names])))
 
@@ -25,14 +26,13 @@ mapping = {'E1': "eog", 'E8': "eog", 'E14': "eog", 'E21': "eog", 'E25': "eog",
 
 
 def run_filter(subject, task):
-    
     """Filter raw data.
 
     Parameters
     ----------
     *subject: string
         The participant reference
-        
+
     *task: string
         The file to load ('Attention' or 'TNT')
 
@@ -40,10 +40,10 @@ def run_filter(subject, task):
 
     """
     if subject in ['33FAM', '49STH', '54CCA']:
-        root       = 'E:/ENGRAMME/Exclus/GROUPE_2/EEG/'
+        root = 'E:/ENGRAMME/Exclus/GROUPE_2/EEG/'
     else:
-        root       = 'E:/ENGRAMME/GROUPE_2/EEG/'
-    
+        root = 'E:/ENGRAMME/GROUPE_2/EEG/'
+
     # Load edf file
     subject_path = root + subject + '/' + subject + fname[task]['eeg']
     raw = mne.io.read_raw_edf(subject_path, preload=True)
@@ -60,7 +60,7 @@ def run_filter(subject, task):
     raw.drop_channels(drop)
 
     # Save raw data
-    out_raw = out + task + '/1_raw/' + subject + '-raw.fif'
+    out_raw = root + task + '/1_raw/' + subject + '-raw.fif'
     raw.save(out_raw, overwrite=True)
 
     # Filter
@@ -72,12 +72,12 @@ def run_filter(subject, task):
     raw.set_eeg_reference('average', projection=True)
 
     # Save data
-    out_rawfilter = out + task + '/2_rawfilter/' + subject + '-raw.fif'
+    out_rawfilter = root + task + '/2_rawfilter/' + subject + '-raw.fif'
     raw.save(out_rawfilter, overwrite=True)
 
 
 # Loop across subjects
 if __name__ == '__main__':
-    task = 'Attention' # 'TNT'
-    for subject in Names:
-        run_filter(subject, task)
+    for task in ['Attention', 'TNT']:
+        for subject in Names:
+            run_filter(subject, task)
