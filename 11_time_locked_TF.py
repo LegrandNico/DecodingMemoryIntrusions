@@ -154,7 +154,7 @@ def extract_time_locked(subject, exclude_peak, info):
             # Label as an intrusion if the peak > 95% CI
             for id in indexes:
 
-                if (id > exclude_peak) & (id < 240): # Exclude peak < 0.4s & > 2.5s after stim presentation
+                if (id > exclude_peak) & (id < 240): # Exclude peak < 0.4s & > 2.4s after stim presentation
 
                     # Check that peak > 95 CI
                     if length==1:

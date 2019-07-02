@@ -16,6 +16,19 @@ root = 'E:/EEG_wd/Machine_learning/'
 Names = os.listdir(root + 'TNT/1_raw')  # Subjects ID
 Names = sorted(list(set([subject[:5] for subject in Names])))
 
+
+sns.set_context('talk')
+plt.rcParams['figure.figsize'] = [8, 4]
+plt.plot(np.arange(-0.2, 3.01, 0.01), data[i])
+plt.plot(np.arange(-0.2, 3.01, 0.01), ci[i], color='#778899')
+plt.fill_between(np.arange(-0.2, 3.01, 0.01), ci[i], color='#778899', alpha=0.2)
+plt.axvline(x=0, linestyle='--', color='r')
+plt.ylim((0, 1))
+plt.xlabel('Time (s)')
+plt.ylabel('Intrusion probability')
+plt.tight_layout()
+sns.despine()
+plt.savefig('C:/Users/nicolas/Downloads/' + 'non-intrusions.svg', dpi=300)
 # =============================================================================
 # %% Count number of mental events
 # =============================================================================

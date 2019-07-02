@@ -100,7 +100,7 @@ def mental_events(exclude_peak):
 
             eeg_intrusions = tnt_df[tnt_df['ListImage.Cycle'].isin(block)]['EEG_intrusions']
             
-            if len(eeg_intrusions) > 3:
+            if len(eeg_intrusions) > 5:
                 
                 count = eeg_intrusions.sum()/len(eeg_intrusions)
                     

@@ -18,15 +18,14 @@ from scipy.stats import trim_mean, zscore
 trim = lambda x: trim_mean(x, 0.1, axis=0)
 
 classifier   = RandomForestClassifier(class_weight='balanced',
-                                      n_estimators= 50,
+                                      n_estimators= 500,
                                       random_state=42)
 
 root = 'E:/EEG_wd/Machine_learning/'
 Names = os.listdir(root + 'TNT/1_raw')  # Subjects ID
 Names = sorted(list(set([subject[:5] for subject in Names])))
 
-root = 'E:/EEG_wd/Machine_learning/'
-
+cwd = os.getcwd()
 # =============================================================================
 # %% Topomap of selected patterns
 # =============================================================================
@@ -64,12 +63,22 @@ for subject in Names:
 attention = attention.average()
 
 # GINI index
-evoked = mne.EvokedArray(zscore(np.asarray(gini).mean(0))[:, np.newaxis],
+gini = np.asarray(gini)
+for i in range(27):
+    gini[i] = zscore(gini[i])
+
+from scipy.stats import ttest_1samp
+t, p = ttest_1samp(gini, axis=0, popmean=0)
+
+T0, p_values, H0 = permutation_t_test(gini, 5000, n_jobs=1)
+mask = p_values[:, np.newaxis] <= 0.05
+
+evoked = mne.EvokedArray(T0[:, np.newaxis],
                          attention.info, tmin=0.)
 
 evoked.plot_topomap(ch_type='eeg', times=0, scalings=1,
-                    time_format=None, cmap=plt.cm.get_cmap('viridis', 12), vmin=-3, vmax=3,
-                    units='GINI index (z-scores)',
+                    time_format=None, cmap=plt.cm.get_cmap('RdBu_r', 12), vmin=-3, vmax=3,
+                    units='GINI index (z-scores)', mask=mask,
                     size=3, show_names=lambda x: x[4:] + ' ' * 20,
                     time_unit='s', show=False)
-plt.savefig('TNT_decoding_GINI.svg', dpi=300)
+plt.savefig(cwd + '/TNT_decoding_GINI.svg', dpi=300)

@@ -11,14 +11,12 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-from mne.stats import permutation_cluster_1samp_test, permutation_t_test
+from mne.stats import permutation_t_test
 from mne.decoding import SlidingEstimator, cross_val_multiscore
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
 from sklearn.ensemble.forest import RandomForestClassifier
 from scipy.ndimage.filters import gaussian_filter1d
-from mne.decoding import UnsupervisedSpatialFilter
-from sklearn.decomposition import PCA, FastICA
 
 import os
 
@@ -97,7 +95,7 @@ def run_decoding_attention(subject, classifier):
     plt.axvline(x=0, color='k')
     plt.ylabel('AUC')
     plt.ylim([0.4, 1.0])
-    plt.axvspan(0.2, 0.5, alpha=0.1, color='red')
+    plt.axvspan(0.25, 0.5, alpha=0.1, color='red')
     plt.annotate('Window of interest', xy = (0.1 , 0.90))
     plt.savefig(root + 'Results/Decoding/' + subject + 'decoding.png')  
     plt.clf()
@@ -117,56 +115,6 @@ if __name__ == '__main__':
         scores.append(run_decoding_attention(subject, classifier).mean(0))
     
     np.save(root + 'Attention_decoding.npy', np.asarray(scores))
-    
-    scores = np.load(root + 'Attention_decoding.npy')
-    
-    df = pd.DataFrame(scores).melt()
-    df['Time'] = (df.variable / 100) - 0.2
-    
-    # Permutation 1 sample
-    T_obs, clusters, cluster_p_values, H0 = \
-        permutation_cluster_1samp_test(scores - 0.5,
-                                       threshold=None,
-                                       n_permutations=5000,
-                                       tail=0,
-                                       n_jobs=1)
-    
-    # Create new stats image with only significant clusters
-    T_obs_plot = np.nan * np.ones_like(T_obs)
-    for c, p_val in zip(clusters, cluster_p_values):
-        if p_val <= 0.01:
-            T_obs_plot[c] = T_obs[c]
-    
-    # Plot scores
-    plt.rcParams['figure.figsize'] = [12, 6]
-    sns.set_context("talk", font_scale=1.4)
-    sns.lineplot(x="Time", y="value", 
-                 data=df, 
-                 ci=68, 
-                 color='royalblue')
-    plt.axhline(y=0.5, linestyle='--', color='gray')
-    plt.axvline(x=0.2, color='red', linestyle='--')
-    plt.axvline(x=0., color = 'k')
-    plt.ylabel('AUC', size=30)
-    plt.xlabel('Time (s)', size=30)
-    plt.xticks(np.arange(-0.2, 1.5, 0.2))
-    
-    # plot significant time range
-    plt.fill_between(np.arange(-0.2, 1.51, 0.01),0.5,
-                     scores.mean(0), where = ~np.isnan(T_obs_plot),
-                     color='b', alpha=0.2)
-    
-    mask = np.ma.masked_where(np.isnan(T_obs_plot), scores.mean(0))
-    
-    plt.plot(np.arange(-0.2, 1.51, 0.01),
-             mask,
-             color='k',
-             linewidth = 3)
-    sns.despine(offset=10, trim=True)
-    plt.savefig('attention_decoding.svg', dpi=300)  
-    plt.clf()
-    plt.close()
-
 
 # =============================================================================
 # %% Topomaps

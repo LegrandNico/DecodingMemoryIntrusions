@@ -33,7 +33,7 @@ classifier   = RandomForestClassifier(class_weight='balanced',
                                       n_estimators= 50,
                                       random_state=42)
 
-root = 'E:/EEG_wd/Machine_learning/'
+cwd = os.getcwd()
  
 # %% extract TNT
 def data_tnt(subject):
@@ -154,6 +154,9 @@ def extract_decoding(subject, overwrite = True):
 
     return proba, labels
 
+for subject in Names:
+    extract_decoding(subject, overwrite = True)
+    
 # =============================================================================
 # %% Testing decoder
 # =============================================================================
@@ -311,7 +314,7 @@ if __name__ == '__main__':
     plt.tight_layout()
     plt.ylabel('True label', size = 20, fontweight="bold")
     plt.xlabel('Predicted label', size = 20, fontweight="bold")
-    plt.savefig('TNT_decoding_CM.svg', dpi=300)
+    plt.savefig(cwd + '/Figures/TNT_decoding_CM.svg', dpi=300)
     plt.close()
 
     # AUC stripplot
@@ -326,5 +329,5 @@ if __name__ == '__main__':
                   linewidth=1.5)
     plt.axhline(y=0.5, linestyle='--', color='r')
     plt.ylabel('AUC', size=25)
-    plt.savefig('TNT_decoding_AUC.svg', dpi=300)
+    plt.savefig(cwd + '/Figures/TNT_decoding_AUC.svg', dpi=300)
     plt.close()
