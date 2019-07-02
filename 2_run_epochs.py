@@ -63,34 +63,35 @@ def run_epochs(subject, task):
         for i in range(len(events)):
             if eprime['Cond1'][i] == 'Think':
                 if eprime['Cond2'][i] == 'Emotion':
-                    events[i,2] = 1
+                    events[i, 2] = 1
                 else:
-                    events[i,2] = 2
+                    events[i, 2] = 2
             elif eprime['Cond1'][i] == 'No-Think':
                 if eprime['Cond2'][i] == 'Emotion':
-                    events[i,2] = 3
+                    events[i, 2] = 3
                 else:
-                    events[i,2] = 4
+                    events[i, 2] = 4
             else:
-                events[i,2] = 5
+                events[i, 2] = 5
         # Set event id
-        id = {'Think/EMO': 1, 'Think/NEU': 2, 'No-Think/EMO': 3, 'No-Think/NEU': 4}
+        id = {'Think/EMO': 1, 'Think/NEU': 2,
+              'No-Think/EMO': 3, 'No-Think/NEU': 4}
 
     elif task == 'Attention':
 
         for i in range(events.shape[0]):
             if eprime['Cond1'][i] == 'Think':
                 if eprime['Cond2'][i] == 'Emotion':
-                    events[i,2] = 1
+                    events[i, 2] = 1
                 else:
-                    events[i,2] = 2
+                    events[i, 2] = 2
             elif eprime['Cond1'][i] == 'No-Think':
                 if eprime['Cond2'][i] == 'Emotion':
-                    events[i,2] = 3
+                    events[i, 2] = 3
                 else:
-                    events[i,2] = 4
+                    events[i, 2] = 4
             else:
-                events[i,2] = 5
+                events[i, 2] = 5
 
         # Set event id
         id = {'Think/EMO': 1,       'Think/NEU': 2,
@@ -108,7 +109,7 @@ def run_epochs(subject, task):
     # Save epochs
     epochs.save(root + task + '/3_epochs/' + subject + '-epo.fif')
 
-    epochs.info['projs'] = list()  # remove proj, don't proj while interpolating
+    epochs.info['projs'] = list()  # remove proj
 
     ransac = Ransac(verbose='progressbar', n_jobs=1)
     epochs_clean = ransac.fit_transform(epochs)
@@ -160,6 +161,6 @@ def run_epochs(subject, task):
 # Loop across subjects
 if __name__ == '__main__':
 
-    task = 'Attention' # 'TNT'
-    for subject in Names:
-        run_epochs(subject, task)
+    for task in ['Attention', 'TNT']:
+        for subject in Names:
+            run_epochs(subject, task)
