@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 import mne
 import os
 
-root = 'E:/EEG_wd/Machine_learning/'
-Names = os.listdir(root + task + '/1_raw')  # Subjects ID
-Names       = sorted(list(set([subject[:5] for subject in Names])))
+root = "E:/EEG_wd/Machine_learning/"
+Names = os.listdir(root + task + "/1_raw")  # Subjects ID
+Names = sorted(list(set([subject[:5] for subject in Names])))
 
 
 def run_autoreject(subject, task):
@@ -34,12 +34,11 @@ def run_autoreject(subject, task):
 
     """
     # Import data
-    input_path = root + task + '/4_ICA/' + subject + '-epo.fif'
+    input_path = root + task + "/4_ICA/" + subject + "-epo.fif"
     epochs = mne.read_epochs(input_path)
 
     # Autoreject
-    ar = AutoReject(random_state=42,
-                    n_jobs=6)
+    ar = AutoReject(random_state=42, n_jobs=6)
 
     ar.fit_transform(epochs)
     epochs_clean = ar.transform(epochs)
@@ -51,31 +50,30 @@ def run_autoreject(subject, task):
     fig, axes = plt.subplots(2, 1, figsize=(6, 6))
 
     for ax in axes:
-        ax.tick_params(axis='x', which='both', bottom='off', top='off')
-        ax.tick_params(axis='y', which='both', left='off', right='off')
+        ax.tick_params(axis="x", which="both", bottom="off", top="off")
+        ax.tick_params(axis="y", which="both", left="off", right="off")
 
     evoked.plot(exclude=[], axes=axes[0], ylim=[-30, 30], show=False)
-    axes[0].set_title('Before autoreject')
+    axes[0].set_title("Before autoreject")
     evoked_clean.plot(exclude=[], axes=axes[1], ylim=[-30, 30])
-    axes[1].set_title('After autoreject')
+    axes[1].set_title("After autoreject")
     plt.tight_layout()
-    plt.savefig(root + task + '/5_autoreject/' +
-                subject + '-autoreject.png')
+    plt.savefig(root + task + "/5_autoreject/" + subject + "-autoreject.png")
     plt.close()
 
     # Plot heatmap
     ar.get_reject_log(epochs).plot()
-    plt.savefig(root + task + '/5_autoreject/' + subject + '-heatmap.png')
+    plt.savefig(root + task + "/5_autoreject/" + subject + "-heatmap.png")
     plt.close()
 
     # Save epoch data
-    out_epoch = root + task + '/5_autoreject/' + subject + '-epo.fif'
+    out_epoch = root + task + "/5_autoreject/" + subject + "-epo.fif"
     epochs_clean.save(out_epoch)
 
 
 # Loop across subjects
-if __name__ == '__main__':
+if __name__ == "__main__":
 
     for subject in Names:
-#        for task in ['TNT', 'Attention']:
+        #        for task in ['TNT', 'Attention']:
         run_autoreject(subject, task)

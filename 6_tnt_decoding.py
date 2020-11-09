@@ -18,16 +18,16 @@ from scipy.ndimage.filters import gaussian_filter1d
 
 import os
 
-task = 'Attention'
-root = 'E:/EEG_wd/Machine_learning/'
-Names = os.listdir(root + task + '/1_raw')  # Subjects ID
-Names       = sorted(list(set([subject[:5] for subject in Names])))
+task = "Attention"
+root = "E:/EEG_wd/Machine_learning/"
+Names = os.listdir(root + task + "/1_raw")  # Subjects ID
+Names = sorted(list(set([subject[:5] for subject in Names])))
 
-classifier   = RandomForestClassifier(class_weight='balanced',
-                                      n_estimators= 50,
-                                      random_state=42)
+classifier = RandomForestClassifier(
+    class_weight="balanced", n_estimators=50, random_state=42
+)
 
-root = 'E:/EEG_wd/Machine_learning/'
+root = "E:/EEG_wd/Machine_learning/"
 
 
 # =========================================
@@ -50,29 +50,26 @@ def shuffled_training_labels(subject, n_boot):
     """
 
     # Attention data
-    attention_df = pd.read_csv(root + 'Attention/Behavior/' + subject + '.txt')
-    attention = mne.read_epochs(root + 'Attention/6_decim/' + subject + '-epo.fif')
+    attention_df = pd.read_csv(root + "Attention/Behavior/" + subject + ".txt")
+    attention = mne.read_epochs(root + "Attention/6_decim/" + subject + "-epo.fif")
 
-    attention.crop(0.2, 0.5) # Only select time of interest to save memory
+    attention.crop(0.2, 0.5)  # Only select time of interest to save memory
 
     # TNT data
-    tnt_df = pd.read_csv(root + 'TNT/Behavior/' + subject + '.txt')
-    tnt = mne.read_epochs(root + 'TNT/6_decim/' + subject + '-epo.fif')
+    tnt_df = pd.read_csv(root + "TNT/Behavior/" + subject + ".txt")
+    tnt = mne.read_epochs(root + "TNT/6_decim/" + subject + "-epo.fif")
 
     shuffled = []
 
     for i in range(n_boot):
 
         # Classifier
-        clf = make_pipeline(StandardScaler(),
-                            classifier)
+        clf = make_pipeline(StandardScaler(), classifier)
 
-        time_gen = GeneralizingEstimator(clf,
-                                         scoring='roc_auc',
-                                         n_jobs=6)
+        time_gen = GeneralizingEstimator(clf, scoring="roc_auc", n_jobs=6)
 
-        X_train = attention._data[attention_df.Cond1 != 'Think', :, :]
-        y_train = attention_df.Cond1[attention_df.Cond1 != 'Think'] == 'No-Think'
+        X_train = attention._data[attention_df.Cond1 != "Think", :, :]
+        y_train = attention_df.Cond1[attention_df.Cond1 != "Think"] == "No-Think"
 
         # Shuffled the trainning labels
         labels = y_train.sample(frac=1)
@@ -80,7 +77,7 @@ def shuffled_training_labels(subject, n_boot):
         # Fit the model
         time_gen.fit(X_train, labels)
 
-        X_test      = tnt._data[(tnt_df.Cond1 == 'No-Think'), :, :]
+        X_test = tnt._data[(tnt_df.Cond1 == "No-Think"), :, :]
 
         proba = time_gen.predict_proba(X_test)
 
@@ -89,12 +86,13 @@ def shuffled_training_labels(subject, n_boot):
     shuffled = np.asarray(shuffled)
 
     # 95th percentile
-    ci = np.percentile(shuffled[:, :, :, :, 1], 97.5, axis = 0)
+    ci = np.percentile(shuffled[:, :, :, :, 1], 97.5, axis=0)
 
-    np.save(root  + 'Results/Shuffled_95CI/' + subject + '-high.npy', ci)
+    np.save(root + "Results/Shuffled_95CI/" + subject + "-high.npy", ci)
+
 
 # %% Run
-if __name__ == '__main__':
-    
+if __name__ == "__main__":
+
     for subject in Names[2:]:
-        shuffled_training_labels(subject, n_boot = 200)
+        shuffled_training_labels(subject, n_boot=200)
