@@ -1,10 +1,5 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jul 31 14:38:23 2018
+# Author: Nicolas Legrand (legrand@cyceron.fr)
 
-@author: legrand
-"""
 from sklearn import metrics
 import pingouin as pg
 import seaborn as sns

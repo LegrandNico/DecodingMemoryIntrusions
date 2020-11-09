@@ -1,9 +1,5 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Jun 22 20:20:49 2019
+# Author: Nicolas Legrand (legrand@cyceron.fr)
 
-@author: nicolas
-"""
 import seaborn as sns
 import matplotlib.pyplot as plt
 import numpy as np

@@ -1,9 +1,5 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Apr 22 18:04:05 2019
+# Author: Nicolas Legrand (legrand@cyceron.fr)
 
-@author: nicolas
-"""
 import pandas as pd
 import mne
 import ntpath

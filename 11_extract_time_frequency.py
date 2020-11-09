@@ -1,10 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Jun 11 14:00:20 2019
-
-@author: nicolas
-"""
-
+# Author: Nicolas Legrand (legrand@cyceron.fr)
 
 import pandas as pd
 import numpy as np

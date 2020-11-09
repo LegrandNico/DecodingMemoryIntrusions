@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Fri May 10 00:26:24 2019
-
-@author: nicolas
-"""
+# Author: Nicolas Legrand (legrand@cyceron.fr)
 
 import mne
 import numpy as np

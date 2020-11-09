@@ -1,9 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Jun 22 19:55:41 2019
-
-@author: nicolas
-"""
+# Author: Nicolas Legrand (legrand@cyceron.fr)
 
 import pingouin as pg
 import seaborn as sns

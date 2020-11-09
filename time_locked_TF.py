@@ -1,10 +1,5 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Fri Jan 18 14:22:43 2019
+# Author: Nicolas Legrand (legrand@cyceron.fr)
 
-@author: legrand
-"""
 
 import pandas as pd
 import numpy as np

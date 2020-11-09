@@ -1,9 +1,5 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Jun  8 18:01:09 2019
+# Author: Nicolas Legrand (legrand@cyceron.fr)
 
-@author: nicolas
-"""
 
 import os
 import mne
