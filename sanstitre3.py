@@ -1,10 +1,4 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sat Jun 22 20:30:04 2019
-
-@author: nicolas
-"""
-
+# Author: Nicolas Legrand (legrand@cyceron.fr)
 
 # Extract TFR, average across frequencies and select only No-Think trials
 tnt_df = pd.read_csv(root + "TNT/Behavior/" + subject + ".txt")

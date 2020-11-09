@@ -1,9 +1,5 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Sun May 12 19:09:53 2019
+# Author: Nicolas Legrand (legrand@cyceron.fr)
 
-@author: Nicolas Legrand
-"""
 import mne
 import numpy as np
 import pandas as pd
