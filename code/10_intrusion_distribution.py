@@ -8,8 +8,8 @@ import peakutils
 import pandas as pd
 
 root = "E:/EEG_wd/Machine_learning/"
-Names = os.listdir(root + "TNT/1_raw")  # Subjects ID
-Names = sorted(list(set([subject[:5] for subject in Names])))
+names = os.listdir(root + "TNT/1_raw")  # Subjects ID
+names = sorted(list(set([subject[:5] for subject in names])))
 
 root = "E:/EEG_wd/Machine_learning/"
 
@@ -34,7 +34,7 @@ def intrusions_distribution(exclude_peak):
     """
 
     dist_df = pd.DataFrame([])
-    for subject in Names:
+    for subject in names:
 
         # Load the selected classifiers
         final_df = pd.read_csv(root + "Classifiers.txt")

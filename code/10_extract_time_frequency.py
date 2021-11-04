@@ -5,24 +5,24 @@ import numpy as np
 import os
 import ntpath
 import mne
-from mne.time_frequency import tfr_multitaper, tfr_morlet
+from mne.time_frequency import tfr_multitaper
 
 task = "TNT"
-root = "E:/EEG_wd/Machine_learning/"
-Names = os.listdir(root + task + "/1_raw")  # Subjects ID
-Names = sorted(list(set([subject[:5] for subject in Names])))
+root = "D:/EEG_wd/Machine_learning/"
+names = os.listdir(root + task + "/1_raw")  # Subjects ID
+names = sorted(list(set([subject[:5] for subject in names])))
 
-root = "E:/EEG_wd/Machine_learning/"
+root = "D:/EEG_wd/Machine_learning/"
 
 # %% extract TNT
 def data_tnt(subject):
 
     if subject in ["33FAM", "49STH", "54CCA"]:
-        data_path = "E:/ENGRAMME/Exclus/GROUPE_2/EEG/"
-        criterion_path = "E:/ENGRAMME/Exclus/GROUPE_2/COMPORTEMENT/"
+        data_path = "D:/ENGRAMME/Exclus/GROUPE_2/EEG/"
+        criterion_path = "D:/ENGRAMME/Exclus/GROUPE_2/COMPORTEMENT/"
     else:
-        data_path = "E:/ENGRAMME/GROUPE_2/EEG/"
-        criterion_path = "E:/ENGRAMME/GROUPE_2/COMPORTEMENT/"
+        data_path = "D:/ENGRAMME/GROUPE_2/EEG/"
+        criterion_path = "D:/ENGRAMME/GROUPE_2/COMPORTEMENT/"
 
     # Load preprocessed epochs
     in_epoch = root + "TNT/5_autoreject/" + subject + "-epo.fif"
@@ -101,11 +101,11 @@ def extract_frequencies(subject, freqs, decim):
 
     epochs = tnt[tnt_df.Cond1 == "No-Think"]
 
-    this_tfr = tfr_morlet(
+    this_tfr = tfr_multitaper(
         epochs,
         freqs,
         n_cycles=n_cycles,
-        n_jobs=6,
+        n_jobs=2,
         average=False,
         decim=decim,
         return_itc=False,
@@ -123,5 +123,5 @@ def extract_frequencies(subject, freqs, decim):
 # %%
 # =============================================================================
 total = []
-for subject in Names:
+for subject in names:
     extract_frequencies(subject, freqs=np.arange(3, 30, 1), decim=10)

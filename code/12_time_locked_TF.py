@@ -15,8 +15,8 @@ from mne.stats import permutation_cluster_1samp_test
 
 task = "TNT"
 root = "E:/EEG_wd/Machine_learning/"
-Names = os.listdir(root + task + "/1_raw")  # Subjects ID
-Names = sorted(list(set([subject[:5] for subject in Names])))
+names = os.listdir(root + task + "/1_raw")  # Subjects ID
+names = sorted(list(set([subject[:5] for subject in names])))
 
 root = "E:/EEG_wd/Machine_learning/"
 
@@ -379,7 +379,7 @@ def extract_time_locked(subject, exclude_peak, info):
 # =============================================================================
 tnt, tnt_df = data_tnt("31NLI")
 
-for subject in Names:
+for subject in names:
     extract_time_locked(subject, exclude_peak=40, info=tnt.info)
 
 # =============================================================================
@@ -387,7 +387,7 @@ for subject in Names:
 # =============================================================================
 
 intrusion, baseline = [], []
-for subject in Names:
+for subject in names:
     try:
         intrusion.append(
             np.load(

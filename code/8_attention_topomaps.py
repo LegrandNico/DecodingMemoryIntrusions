@@ -19,8 +19,8 @@ classifier = RandomForestClassifier(
 )
 
 root = "E:/EEG_wd/Machine_learning/"
-Names = os.listdir(root + "TNT/1_raw")  # Subjects ID
-Names = sorted(list(set([subject[:5] for subject in Names])))
+names = os.listdir(root + "TNT/1_raw")  # Subjects ID
+names = sorted(list(set([subject[:5] for subject in names])))
 
 cwd = os.getcwd()
 # =============================================================================
@@ -38,7 +38,7 @@ final_df = pd.read_csv(root + "Classifiers.txt")
 final_df = final_df.drop_duplicates(subset="Subject", keep="first")
 
 gini = []
-for subject in Names:
+for subject in names:
 
     time = final_df[final_df.Subject == subject].Time.iloc[0] + 40
 

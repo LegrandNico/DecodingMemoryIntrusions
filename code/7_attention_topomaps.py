@@ -13,8 +13,8 @@ from scipy.stats import trim_mean
 trim = lambda x: trim_mean(x, 0.1, axis=0)
 
 root = "E:/EEG_wd/Machine_learning/"
-Names = os.listdir(root + "TNT/1_raw")  # Subjects ID
-Names = sorted(list(set([subject[:5] for subject in Names])))
+names = os.listdir(root + "TNT/1_raw")  # Subjects ID
+names = sorted(list(set([subject[:5] for subject in names])))
 
 root = "E:/EEG_wd/Machine_learning/"
 
@@ -33,7 +33,7 @@ final_df = pd.read_csv(root + "Classifiers.txt")
 final_df = final_df.drop_duplicates(subset="Subject", keep="first")
 
 gini = []
-for subject in Names:
+for subject in names:
 
     time = final_df[final_df.Subject == subject].Time.iloc[0] + 40
 
@@ -100,7 +100,7 @@ def count_intrusions(exclude_peak):
 
     intrusion_df = pd.DataFrame([])
 
-    for subject in Names:
+    for subject in names:
 
         # Load probabilities for intrusions estimated by the classifier
         # trained on the Attention dataset.
@@ -276,7 +276,7 @@ def mental_events(exclude_peak):
 
     intrusion_df = pd.DataFrame([])
 
-    for subject in Names:
+    for subject in names:
 
         # Load probabilities for intrusions estimated by the classifier
         # trained on the Attention dataset.
@@ -445,7 +445,7 @@ def intrusions_distribution(exclude_peak):
     """
 
     dist_df = pd.DataFrame([])
-    for subject in Names:
+    for subject in names:
 
         # Load the selected classifiers
         final_df = pd.read_csv(root + "Classifiers.txt")

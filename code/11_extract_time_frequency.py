@@ -8,11 +8,11 @@ import mne
 from mne.time_frequency import tfr_multitaper, tfr_morlet
 
 task = "TNT"
-root = "E:/EEG_wd/Machine_learning/"
-Names = os.listdir(root + task + "/1_raw")  # Subjects ID
-Names = sorted(list(set([subject[:5] for subject in Names])))
+root = "D:/EEG_wd/Machine_learning/"
+names = os.listdir(root + task + "/1_raw")  # Subjects ID
+names = sorted(list(set([subject[:5] for subject in names])))
 
-root = "E:/EEG_wd/Machine_learning/"
+root = "D:/EEG_wd/Machine_learning/"
 
 # %% extract TNT
 def data_tnt(subject):
@@ -123,5 +123,5 @@ def extract_frequencies(subject, freqs, decim):
 # %%
 # =============================================================================
 total = []
-for subject in Names:
+for subject in names:
     extract_frequencies(subject, freqs=np.arange(3, 30, 1), decim=10)

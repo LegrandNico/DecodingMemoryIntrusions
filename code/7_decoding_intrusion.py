@@ -1,7 +1,6 @@
 # Author: Nicolas Legrand (legrand@cyceron.fr)
 
 from sklearn import metrics
-import pingouin as pg
 import seaborn as sns
 import matplotlib.pyplot as plt
 import peakutils
@@ -12,7 +11,7 @@ import os
 import pandas as pd
 
 from mne.stats import permutation_t_test, permutation_cluster_1samp_test
-from sklearn.ensemble import RandomForestClassifier, ExtraTreesClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import (
     confusion_matrix,
     f1_score,
@@ -24,27 +23,21 @@ from sklearn.metrics import (
     balanced_accuracy_score,
 )
 from sklearn.pipeline import make_pipeline
-from mne.decoding import (
-    cross_val_multiscore,
-    GeneralizingEstimator,
-    LinearModel,
-    SlidingEstimator,
-    get_coef,
-)
+from mne.decoding import cross_val_multiscore, GeneralizingEstimator, SlidingEstimator
 from sklearn.preprocessing import StandardScaler
 from scipy.ndimage.filters import gaussian_filter1d
 from scipy import stats
 from sklearn.model_selection import cross_val_score
 
 root = "E:/EEG_wd/Machine_learning/"
-Names = os.listdir(root + "TNT/1_raw")  # Subjects ID
-Names = sorted(list(set([subject[:5] for subject in Names])))
+names = os.listdir(root + "TNT/1_raw")  # Subjects ID
+names = sorted(list(set([subject[:5] for subject in names])))
 
 classifier = RandomForestClassifier(
     class_weight="balanced", n_estimators=50, random_state=42
 )
 
-root = "E:/EEG_wd/Machine_learning/"
+cwd = os.getcwd()
 
 # %% extract TNT
 def data_tnt(subject):
@@ -194,6 +187,9 @@ def extract_decoding(subject, overwrite=True):
     return proba, labels
 
 
+for subject in names:
+    extract_decoding(subject, overwrite=True)
+
 # =============================================================================
 # %% Testing decoder
 # =============================================================================
@@ -223,7 +219,7 @@ def testing_decoder(exclude_peak):
     """
 
     output_df, cm_final = pd.DataFrame([]), []
-    for subject in Names:
+    for subject in names:
 
         # Load probabilities for intrusions estimated by the classifier
         # trained on the Attention dataset.
@@ -391,7 +387,7 @@ if __name__ == "__main__":
     plt.tight_layout()
     plt.ylabel("True label", size=20, fontweight="bold")
     plt.xlabel("Predicted label", size=20, fontweight="bold")
-    plt.savefig("TNT_decoding_CM.svg", dpi=300)
+    plt.savefig(cwd + "/Figures/TNT_decoding_CM.svg", dpi=300)
     plt.close()
 
     # AUC stripplot
@@ -402,5 +398,5 @@ if __name__ == "__main__":
     )
     plt.axhline(y=0.5, linestyle="--", color="r")
     plt.ylabel("AUC", size=25)
-    plt.savefig("TNT_decoding_AUC.svg", dpi=300)
+    plt.savefig(cwd + "/Figures/TNT_decoding_AUC.svg", dpi=300)
     plt.close()
