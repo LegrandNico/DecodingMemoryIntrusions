@@ -19,8 +19,8 @@ import os
 
 task = "Attention"
 root = "E:/EEG_wd/Machine_learning/"
-Names = os.listdir(root + task + "/1_raw")  # Subjects ID
-Names = sorted(list(set([subject[:5] for subject in Names])))
+names = os.listdir(root + task + "/1_raw")  # Subjects ID
+names = sorted(list(set([subject[:5] for subject in names])))
 
 classifier = RandomForestClassifier(
     class_weight="balanced", n_estimators=50, random_state=42
@@ -100,7 +100,7 @@ def run_decoding_attention(subject, classifier):
 if __name__ == "__main__":
 
     scores = []
-    for subject in Names:
+    for subject in names:
 
         scores.append(run_decoding_attention(subject, classifier).mean(0))
 
@@ -161,7 +161,7 @@ from scipy.stats import trim_mean
 trim = lambda x: trim_mean(x, 0.1, axis=0)
 
 total = []
-for subject in Names:
+for subject in names:
 
     # Import EEG data.
     attention = mne.read_epochs(root + "Attention/6_decim/" + subject + "-epo.fif")

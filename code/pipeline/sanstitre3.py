@@ -44,7 +44,7 @@ def count_intrusions(exclude_peak):
 
     intrusion_df = pd.DataFrame([])
 
-    for subject in Names:
+    for subject in names:
 
         # Load probabilities for intrusions estimated by the classifier
         # trained on the Attention dataset.

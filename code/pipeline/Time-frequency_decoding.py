@@ -18,8 +18,8 @@ from sklearn.ensemble.forest import RandomForestClassifier
 
 task = "Attention"
 root = "E:/EEG_wd/Machine_learning/"
-Names = os.listdir(root + task + "/1_raw")  # Subjects ID
-Names = sorted(list(set([subject[:5] for subject in Names])))
+names = os.listdir(root + task + "/1_raw")  # Subjects ID
+names = sorted(list(set([subject[:5] for subject in names])))
 
 classifier = RandomForestClassifier(
     class_weight="balanced", n_estimators=50, random_state=42
@@ -132,7 +132,7 @@ def attention_TF_decoding(subject, freqs=np.arange(3, 30, 1), decim=20):
 if __name__ == "__main__":
 
     total = []
-    for subject in Names[12:]:
+    for subject in names[12:]:
         subject_score = attention_TF_decoding(subject)
         total.append(subject_score)
         np.save(
@@ -161,7 +161,7 @@ if __name__ == "__main__":
 
 # Load total
 total = []
-for subject in Names:
+for subject in names:
     score = np.load(root + "Results/Attention_TF_decoding/" + subject + ".npy")
     total.append(score)
 

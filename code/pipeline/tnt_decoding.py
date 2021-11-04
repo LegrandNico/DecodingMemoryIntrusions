@@ -16,8 +16,8 @@ import os
 
 task = "Attention"
 root = "E:/EEG_wd/Machine_learning/"
-Names = os.listdir(root + task + "/1_raw")  # Subjects ID
-Names = sorted(list(set([subject[:5] for subject in Names])))
+names = os.listdir(root + task + "/1_raw")  # Subjects ID
+names = sorted(list(set([subject[:5] for subject in names])))
 
 classifier = RandomForestClassifier(
     class_weight="balanced", n_estimators=50, random_state=42
@@ -90,5 +90,5 @@ def shuffled_training_labels(subject, n_boot):
 # %% Run
 if __name__ == "__main__":
 
-    for subject in Names[2:]:
+    for subject in names[2:]:
         shuffled_training_labels(subject, n_boot=200)

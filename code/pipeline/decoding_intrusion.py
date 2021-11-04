@@ -37,8 +37,8 @@ from scipy import stats
 from sklearn.model_selection import cross_val_score
 
 root = "E:/EEG_wd/Machine_learning/"
-Names = os.listdir(root + "TNT/1_raw")  # Subjects ID
-Names = sorted(list(set([subject[:5] for subject in Names])))
+names = os.listdir(root + "TNT/1_raw")  # Subjects ID
+names = sorted(list(set([subject[:5] for subject in names])))
 
 classifier = RandomForestClassifier(
     class_weight="balanced", n_estimators=50, random_state=42
@@ -223,7 +223,7 @@ def testing_decoder(exclude_peak):
     """
 
     output_df, cm_final = pd.DataFrame([]), []
-    for subject in Names:
+    for subject in names:
 
         # Load probabilities for intrusions estimated by the classifier
         # trained on the Attention dataset.

@@ -83,7 +83,7 @@ def mental_events(exclude_peak):
                                         "Block": tnt_df["ListImage.Cycle"].iloc[ii],
                                         "Image": tnt_df["ImageFond"].iloc[ii],
                                         "Intrusion": (idx * 10) - 200,
-                                        "Length": length * 10
+                                        "Length": length * 10,
                                     },
                                     ignore_index=True,
                                 )
@@ -101,7 +101,7 @@ def mental_events(exclude_peak):
                                         "Block": tnt_df["ListImage.Cycle"].iloc[ii],
                                         "Image": tnt_df["ImageFond"].iloc[ii],
                                         "Intrusion": (idx * 10) - 200,
-                                        "Length": length * 10
+                                        "Length": length * 10,
                                     },
                                     ignore_index=True,
                                 )
@@ -121,7 +121,7 @@ def mental_events(exclude_peak):
                                         "Block": tnt_df["ListImage.Cycle"].iloc[ii],
                                         "Image": tnt_df["ImageFond"].iloc[ii],
                                         "Intrusion": (idx * 10) - 200,
-                                        "Length": length * 10
+                                        "Length": length * 10,
                                     },
                                     ignore_index=True,
                                 )
@@ -141,7 +141,7 @@ def mental_events(exclude_peak):
                                         "Block": tnt_df["ListImage.Cycle"].iloc[ii],
                                         "Image": tnt_df["ImageFond"].iloc[ii],
                                         "Intrusion": (idx * 10) - 200,
-                                        "Length": length * 10
+                                        "Length": length * 10,
                                     },
                                     ignore_index=True,
                                 )
@@ -163,7 +163,7 @@ def mental_events(exclude_peak):
                                         "Block": tnt_df["ListImage.Cycle"].iloc[ii],
                                         "Image": tnt_df["ImageFond"].iloc[ii],
                                         "Intrusion": (idx * 10) - 200,
-                                        "Length": length * 10
+                                        "Length": length * 10,
                                     },
                                     ignore_index=True,
                                 )
@@ -189,7 +189,7 @@ def mental_events(exclude_peak):
                         {
                             "Subject": subject,
                             "Block": str(block[0]) + "-" + str(block[1]),
-                            "Events": count
+                            "Events": count,
                         },
                         index=[0],
                     ),

@@ -9,8 +9,8 @@ import pandas as pd
 from scipy.fftpack import fftfreq
 
 root = "E:/EEG_wd/Machine_learning/"
-Names = os.listdir(root + "TNT/1_raw")  # Subjects ID
-Names = sorted(list(set([subject[:5] for subject in Names])))
+names = os.listdir(root + "TNT/1_raw")  # Subjects ID
+names = sorted(list(set([subject[:5] for subject in names])))
 
 
 sns.set_context("talk")
@@ -50,7 +50,7 @@ def fourier(exclude_peak):
 
     total_psd = []
 
-    for subject in Names:
+    for subject in names:
 
         # Load probabilities for intrusions estimated by the classifier
         # trained on the Attention dataset.

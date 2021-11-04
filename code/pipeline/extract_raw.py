@@ -159,6 +159,6 @@ def extract_raws(subject, decim):
 # =============================================================================
 
 if __name__ == "__main__":
-    for subject in Names:  #
+    for subject in names:  #
         decim = 10
         extract_raws(subject, decim)
