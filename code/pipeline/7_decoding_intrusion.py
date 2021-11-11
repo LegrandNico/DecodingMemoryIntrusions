@@ -1,4 +1,4 @@
-# Author: Nicolas Legrand (legrand@cyceron.fr)
+# Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
 
 from sklearn import metrics
 import seaborn as sns

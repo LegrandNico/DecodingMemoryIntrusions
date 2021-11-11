@@ -1,4 +1,4 @@
-# Author: Nicolas Legrand (legrand@cyceron.fr)
+# Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
 
 import mne
 import numpy as np
@@ -6,48 +6,51 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-from mne.stats import permutation_t_test
 from mne.decoding import SlidingEstimator, cross_val_multiscore
 from sklearn.preprocessing import StandardScaler
 from sklearn.pipeline import make_pipeline
-from sklearn.ensemble.forest import RandomForestClassifier
-from scipy.ndimage.filters import gaussian_filter1d
-
-import os
+from sklearn.ensemble import RandomForestClassifier
 
 task = "Attention"
-root = "E:/EEG_wd/Machine_learning/"
-names = os.listdir(root + task + "/1_raw")  # Subjects ID
-names = sorted(list(set([subject[:5] for subject in names])))
+root = "D:/EEG_wd/Machine_learning/"
+
+# Subjects ID
+names = names = [
+    "31NLI", "32CVI", "34LME", "35QSY", "36LSA", "37BMA", "38MAX", "39BDA", "40MMA",
+    "41BAL", "42SPE", "44SMU", "45MJA", "46SQU", "47HMA", "50JOC", "52PFA", "53SMA",
+    "55MNI", "56BCL", "57NCO", "58BAN", "59DIN", "60CAN"
+    ]
 
 classifier = RandomForestClassifier(
     class_weight="balanced", n_estimators=50, random_state=42
 )
 
-root = "E:/EEG_wd/Machine_learning/"
-
 # =======================
 # %% Decoding - Attention
 # =======================
-def run_decoding_attention(subject, classifier):
+def run_decoding_attention(
+    subject: str, 
+    classifier: RandomForestClassifier
+    ) -> np.ndarray:
     """
     Run a sliding decoder on the Attention task and return the 10 fold AUC scores.
 
     Parameters
     ----------
-    * subject: str
+    subject : str
         subject reference (e.g. '31NLI')
-    * classifier: sklearn object
+    classifier : sklearn object
         Define the ML kernel to use.
 
     Return
     ------
-    * scores: numpy array
+    scores : np.ndarray
         ROC-AUC scores, time * 10 fold CV.
 
     References
     ----------
-    [1]: https://mne-tools.github.io/stable/auto_examples/decoding/plot_decoding_spatio_temporal_source.html
+    ..[1] https://mne-tools.github.io/stable/auto_examples/decoding/plot_decoding_spatio_temporal_source.html
+
     """
 
     # Import behavioral and EEG data.
@@ -103,74 +106,3 @@ if __name__ == "__main__":
         scores.append(run_decoding_attention(subject, classifier).mean(0))
 
     np.save(root + "Attention_decoding.npy", np.asarray(scores))
-
-# =============================================================================
-# %% Topomaps
-# =============================================================================
-
-from scipy.stats import trim_mean
-
-trim = lambda x: trim_mean(x, 0.1, axis=0)
-
-total = []
-for subject in names:
-
-    # Import EEG data.
-    attention = mne.read_epochs(root + "Attention/6_decim/" + subject + "-epo.fif")
-    attention_df = pd.read_csv(root + "Attention/Behavior/" + subject + ".txt")
-
-    baseline = (
-        attention[attention_df.Cond1 == "Baseline"]
-        .average(method=trim)
-        .apply_baseline(baseline=(-0.2, 0))
-    )
-    intrusion = (
-        attention[attention_df.Cond1 == "No-Think"]
-        .average(method=trim)
-        .apply_baseline(baseline=(-0.2, 0))
-    )
-
-    total.append(intrusion._data - baseline._data)
-
-np.save(root + "Attention_topomap.npy", np.asarray(total))
-
-data = np.load(root + "Attention_topomap.npy")
-
-fig, axs = plt.subplots(1, 7, figsize=(15, 5), facecolor="w", edgecolor="k")
-fig.subplots_adjust(hspace=0.5, wspace=0.001)
-
-axs = axs.ravel()
-
-for i, rg in enumerate(np.arange(48, 54, 1)):
-
-    # Load data
-    this_data = data[:, :, rg]
-
-    n_permutations = 50000
-    T0, p_values, H0 = permutation_t_test(this_data, n_permutations, n_jobs=1)
-
-    # Extract mask and indices of active sensors in the layout
-    mask = p_values[:, np.newaxis] <= 0.05
-
-    evoked = mne.EvokedArray(T0[:, np.newaxis], attention.average().info, tmin=0.0)
-
-    evoked.plot_topomap(
-        ch_type="eeg",
-        times=0,
-        scalings=1,
-        time_format=None,
-        cmap=plt.cm.get_cmap("RdBu_r", 12),
-        vmin=-6.0,
-        vmax=6,
-        units="t values",
-        mask=mask,
-        axes=axs[i],
-        size=3,
-        show_names=lambda x: x[4:] + " " * 20,
-        time_unit="s",
-        show=False,
-    )
-
-plt.savefig("attention_topomaps.svg", dpi=300)
-plt.clf()
-plt.close()

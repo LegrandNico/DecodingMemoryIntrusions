@@ -1,4 +1,4 @@
-# Author: Nicolas Legrand (legrand@cyceron.fr)
+# Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
 
 import matplotlib.pyplot as plt
 import mne
