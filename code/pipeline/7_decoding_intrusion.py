@@ -1,33 +1,28 @@
 # Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
 
-from sklearn import metrics
-import seaborn as sns
-import matplotlib.pyplot as plt
-import peakutils
 import itertools
-import numpy as np
-import mne
 import os
-import pandas as pd
 
-from mne.stats import permutation_t_test, permutation_cluster_1samp_test
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import (
-    confusion_matrix,
-    f1_score,
-    roc_auc_score,
-    precision_score,
-    accuracy_score,
-    recall_score,
-    average_precision_score,
-    balanced_accuracy_score,
-)
-from sklearn.pipeline import make_pipeline
-from mne.decoding import cross_val_multiscore, GeneralizingEstimator, SlidingEstimator
-from sklearn.preprocessing import StandardScaler
-from scipy.ndimage.filters import gaussian_filter1d
+import matplotlib.pyplot as plt
+import mne
+import numpy as np
+import pandas as pd
+import peakutils
+import seaborn as sns
+from mne.decoding import (GeneralizingEstimator, SlidingEstimator,
+                          cross_val_multiscore)
+from mne.stats import permutation_cluster_1samp_test, permutation_t_test
 from scipy import stats
+from scipy.ndimage.filters import gaussian_filter1d
+from sklearn import metrics
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import (accuracy_score, average_precision_score,
+                             balanced_accuracy_score, confusion_matrix,
+                             f1_score, precision_score, recall_score,
+                             roc_auc_score)
 from sklearn.model_selection import cross_val_score
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
 
 root = "E:/EEG_wd/Machine_learning/"
 names = os.listdir(root + "TNT/1_raw")  # Subjects ID

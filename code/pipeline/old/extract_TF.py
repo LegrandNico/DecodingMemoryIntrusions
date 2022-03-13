@@ -1,11 +1,12 @@
 # Author: Nicolas Legrand (legrand@cyceron.fr)
 
-import pandas as pd
-import numpy as np
-import os
 import ntpath
+import os
+
 import mne
-from mne.time_frequency import tfr_multitaper, tfr_morlet
+import numpy as np
+import pandas as pd
+from mne.time_frequency import tfr_morlet, tfr_multitaper
 
 task = "TNT"
 root = "E:/EEG_wd/Machine_learning/"

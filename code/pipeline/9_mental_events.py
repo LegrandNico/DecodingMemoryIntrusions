@@ -1,8 +1,9 @@
 # Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
 
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
-import os
 import pandas as pd
 import peakutils
 import seaborn as sns

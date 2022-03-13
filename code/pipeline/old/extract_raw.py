@@ -1,8 +1,9 @@
 # Author: Nicolas Legrand (legrand@cyceron.fr)
 
-import pandas as pd
-import mne
 import ntpath
+
+import mne
+import pandas as pd
 
 root = "E:/EEG_wd/Machine_learning/"
 

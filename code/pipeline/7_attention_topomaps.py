@@ -1,13 +1,13 @@
 # Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
 
+import os
+
+import matplotlib.pyplot as plt
+import mne
+import numpy as np
+import pandas as pd
 import pingouin as pg
 import seaborn as sns
-import matplotlib.pyplot as plt
-import numpy as np
-import mne
-import os
-import pandas as pd
-
 from scipy.stats import trim_mean
 
 trim = lambda x: trim_mean(x, 0.1, axis=0)

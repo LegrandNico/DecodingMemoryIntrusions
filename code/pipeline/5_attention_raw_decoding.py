@@ -1,25 +1,45 @@
 # Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
 
+import matplotlib.pyplot as plt
 import mne
 import numpy as np
 import pandas as pd
 import seaborn as sns
-import matplotlib.pyplot as plt
-
 from mne.decoding import SlidingEstimator, cross_val_multiscore
-from sklearn.preprocessing import StandardScaler
-from sklearn.pipeline import make_pipeline
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
 
 task = "Attention"
 root = "D:/EEG_wd/Machine_learning/"
 
 # Subjects ID
 names = names = [
-    "31NLI", "32CVI", "34LME", "35QSY", "36LSA", "37BMA", "38MAX", "39BDA", "40MMA",
-    "41BAL", "42SPE", "44SMU", "45MJA", "46SQU", "47HMA", "50JOC", "52PFA", "53SMA",
-    "55MNI", "56BCL", "57NCO", "58BAN", "59DIN", "60CAN"
-    ]
+    "31NLI",
+    "32CVI",
+    "34LME",
+    "35QSY",
+    "36LSA",
+    "37BMA",
+    "38MAX",
+    "39BDA",
+    "40MMA",
+    "41BAL",
+    "42SPE",
+    "44SMU",
+    "45MJA",
+    "46SQU",
+    "47HMA",
+    "50JOC",
+    "52PFA",
+    "53SMA",
+    "55MNI",
+    "56BCL",
+    "57NCO",
+    "58BAN",
+    "59DIN",
+    "60CAN",
+]
 
 classifier = RandomForestClassifier(
     class_weight="balanced", n_estimators=50, random_state=42
@@ -29,11 +49,9 @@ classifier = RandomForestClassifier(
 # %% Decoding - Attention
 # =======================
 def run_decoding_attention(
-    subject: str, 
-    classifier: RandomForestClassifier
-    ) -> np.ndarray:
-    """
-    Run a sliding decoder on the Attention task and return the 10 fold AUC scores.
+    subject: str, classifier: RandomForestClassifier
+) -> np.ndarray:
+    """Run a sliding decoder on the Attention task and return the 10 fold AUC scores.
 
     Parameters
     ----------
@@ -67,7 +85,7 @@ def run_decoding_attention(
     # Create the sliding classifier
     time_gen = SlidingEstimator(clf, scoring="roc_auc", n_jobs=1)
 
-    # Run a 10 fold cros validated classification
+    # Run a 8 fold cros validated classification
     scores = cross_val_multiscore(time_gen, data, labels, cv=8)
 
     # Plot single subject decoder performances

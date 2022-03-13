@@ -1,18 +1,19 @@
 # Author: Nicolas Legrand (legrand@cyceron.fr)
 
 
-import pandas as pd
-import numpy as np
-import os
 import ntpath
+import os
+
+import matplotlib.pyplot as plt
 import mne
+import numpy as np
+import pandas as pd
 import peakutils
 import seaborn as sns
-import matplotlib.pyplot as plt
-from mne.time_frequency import tfr_multitaper, tfr_morlet
-from scipy.ndimage.filters import gaussian_filter1d
-from scipy import stats
 from mne.stats import permutation_cluster_1samp_test
+from mne.time_frequency import tfr_morlet, tfr_multitaper
+from scipy import stats
+from scipy.ndimage.filters import gaussian_filter1d
 
 task = "TNT"
 root = "E:/EEG_wd/Machine_learning/"

@@ -1,11 +1,12 @@
 # Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
 
-import seaborn as sns
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
-import os
-import peakutils
 import pandas as pd
+import peakutils
+import seaborn as sns
 
 root = "E:/EEG_wd/Machine_learning/"
 names = os.listdir(root + "TNT/1_raw")  # Subjects ID

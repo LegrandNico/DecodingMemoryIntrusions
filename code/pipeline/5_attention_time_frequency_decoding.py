@@ -2,42 +2,57 @@
 
 
 import os
+
+import matplotlib.pyplot as plt
 import mne
 import numpy as np
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-from mne.time_frequency import tfr_multitaper, tfr_morlet
 from mne.decoding import SlidingEstimator, cross_val_multiscore
-from mne.stats import permutation_cluster_1samp_test
-from sklearn.preprocessing import StandardScaler
-from sklearn.pipeline import make_pipeline
+from mne.time_frequency import tfr_morlet
 from sklearn.ensemble.forest import RandomForestClassifier
-
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
 
 task = "Attention"
-root = "E:/EEG_wd/Machine_learning/"
-names = os.listdir(root + task + "/1_raw")  # Subjects ID
-names = sorted(list(set([subject[:5] for subject in names])))
+root = "D:/EEG_wd/Machine_learning/"
+data_path = "D:/ENGRAMME/GROUPE_2/EEG/"
+
+# Subjects ID
+names = [
+    "31NLI",
+    "32CVI",
+    "34LME",
+    "35QSY",
+    "36LSA",
+    "37BMA",
+    "38MAX",
+    "39BDA",
+    "40MMA",
+    "41BAL",
+    "42SPE",
+    "44SMU",
+    "45MJA",
+    "46SQU",
+    "47HMA",
+    "50JOC",
+    "52PFA",
+    "53SMA",
+    "55MNI",
+    "56BCL",
+    "57NCO",
+    "58BAN",
+    "59DIN",
+    "60CAN",
+]
 
 classifier = RandomForestClassifier(
     class_weight="balanced", n_estimators=50, random_state=42
 )
 
-root = "E:/EEG_wd/Machine_learning/"
-
 # =============================================================================
 # %%
 # =============================================================================
-
-
 def data_attention(subject, eeg=True):
-
-    if subject in ["33FAM", "49STH", "54CCA"]:
-        data_path = "E:/ENGRAMME/Exclus/GROUPE_2/EEG/"
-    else:
-        data_path = "E:/ENGRAMME/GROUPE_2/EEG/"
 
     # Load e-prime file
     eprime_df = data_path + subject + "/" + subject + "_a.txt"
@@ -158,58 +173,3 @@ if __name__ == "__main__":
         plt.savefig(root + "Results/Attention_TF_decoding/" + subject + ".png", dpi=300)
         plt.clf()
         plt.close()
-
-# Load total
-total = []
-for subject in names:
-    score = np.load(root + "Results/Attention_TF_decoding/" + subject + ".npy")
-    total.append(score)
-
-# Plot average results
-threshold = None
-n_permutations = 5000
-T_obs, clusters, cluster_p_values, H0 = permutation_cluster_1samp_test(
-    np.asarray(total) - 0.5, n_permutations=n_permutations, threshold=threshold, tail=0
-)
-
-# Create new stats image with only significant clusters
-T_obs_plot = np.nan * np.ones_like(T_obs)
-for c, p_val in zip(clusters, cluster_p_values):
-    if p_val <= 0.05:
-        T_obs_plot[c] = T_obs[c]
-
-plt.rcParams["figure.figsize"] = [10.0, 5.0]
-max_decod = np.unravel_index(np.asarray(total).mean((0)).argmax(), [27, 101])[1]
-plt.title("Time-frequency decoding", fontweight="bold", size=25)
-plt.imshow(
-    np.asarray(total).mean(0),
-    origin="lower",
-    aspect="auto",
-    vmin=0.35,
-    vmax=0.65,
-    cmap=plt.cm.get_cmap("RdBu_r"),
-    interpolation="hanning",
-    extent=[-0.5, 1.5, 3, 30],
-)
-plt.colorbar()
-plt.contour(
-    ~np.isnan(T_obs_plot),
-    colors=["k"],
-    extent=[-0.5, 1.5, 3, 30],
-    linewidths=[2],
-    corner_mask=False,
-    antialiased=True,
-    levels=[0.5],
-)
-plt.axvline(x=0, color="k", linewidth=3)
-plt.axvline(x=(max_decod / 50) - 0.5, linestyle="--", linewidth=3)
-plt.xlabel("Time (s)", size=20)
-plt.ylabel("Frequencies (Hz)", size=20)
-plt.savefig("frequency_decoding.svg", dpi=300)
-
-
-plt.rcParams["figure.figsize"] = [5.0, 2.0]
-df = pd.DataFrame(np.asarray(total)[:, :, max_decod]).melt()
-sns.lineplot(x="variable", y="value", markers=True, data=df, ci=68, color="r")
-plt.axhline(y=0.5, linestyle="--")
-plt.savefig("frequency_decoding2.svg", dpi=300)

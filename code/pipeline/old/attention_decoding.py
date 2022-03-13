@@ -1,21 +1,20 @@
 # Author: Nicolas Legrand (legrand@cyceron.fr)
 
+import os
+
+import matplotlib.pyplot as plt
 import mne
 import numpy as np
 import pandas as pd
 import seaborn as sns
-import matplotlib.pyplot as plt
-
+from mne.decoding import (SlidingEstimator, UnsupervisedSpatialFilter,
+                          cross_val_multiscore)
 from mne.stats import permutation_cluster_1samp_test, permutation_t_test
-from mne.decoding import SlidingEstimator, cross_val_multiscore
-from sklearn.preprocessing import StandardScaler
-from sklearn.pipeline import make_pipeline
-from sklearn.ensemble.forest import RandomForestClassifier
 from scipy.ndimage.filters import gaussian_filter1d
-from mne.decoding import UnsupervisedSpatialFilter
 from sklearn.decomposition import PCA, FastICA
-
-import os
+from sklearn.ensemble.forest import RandomForestClassifier
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
 
 task = "Attention"
 root = "E:/EEG_wd/Machine_learning/"

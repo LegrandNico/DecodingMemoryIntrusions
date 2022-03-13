@@ -1,10 +1,11 @@
 # Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
 
-from autoreject import Ransac
+import os
+
 import matplotlib.pyplot as plt
 import mne
-import os
 import pandas as pd
+from autoreject import Ransac
 
 root = "E:/EEG_wd/Machine_learning/"
 names = os.listdir(root + "Attention/4_ICA/")

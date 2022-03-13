@@ -1,10 +1,11 @@
 # Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
 
+import os
+
 import matplotlib.pyplot as plt
 import mne
-from mne.preprocessing import ICA
 import numpy as np
-import os
+from mne.preprocessing import ICA
 
 root = "E:/EEG_wd/Machine_learning/"
 names = os.listdir(root + "All_frequencies_multitaper")  # Subjects ID

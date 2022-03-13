@@ -3,21 +3,40 @@
 import mne
 import numpy as np
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
-
-from mne.decoding import GeneralizingEstimator, cross_val_multiscore
-from sklearn.preprocessing import StandardScaler
-from sklearn.pipeline import make_pipeline
+from mne.decoding import GeneralizingEstimator
 from sklearn.ensemble.forest import RandomForestClassifier
-from scipy.ndimage.filters import gaussian_filter1d
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
 
-import os
+root = "D:/EEG_wd/Machine_learning/"
 
-task = "Attention"
-root = "E:/EEG_wd/Machine_learning/"
-names = os.listdir(root + task + "/1_raw")  # Subjects ID
-names = sorted(list(set([subject[:5] for subject in names])))
+# Subjects ID
+names = [
+    "31NLI",
+    "32CVI",
+    "34LME",
+    "35QSY",
+    "36LSA",
+    "37BMA",
+    "38MAX",
+    "39BDA",
+    "40MMA",
+    "41BAL",
+    "42SPE",
+    "44SMU",
+    "45MJA",
+    "46SQU",
+    "47HMA",
+    "50JOC",
+    "52PFA",
+    "53SMA",
+    "55MNI",
+    "56BCL",
+    "57NCO",
+    "58BAN",
+    "59DIN",
+    "60CAN",
+]
 
 classifier = RandomForestClassifier(
     class_weight="balanced", n_estimators=50, random_state=42
@@ -29,19 +48,19 @@ root = "E:/EEG_wd/Machine_learning/"
 # =========================================
 # %% Random label Decoding - Attention -> TNT
 # =========================================
-def shuffled_training_labels(subject, n_boot):
+def shuffled_training_labels(subject: str, n_boot: int) -> np.ndarray:
 
     """
     Run a generalized sliding decoder (GAT). Train on shuffled Attention labels.
 
     Parameters
     ----------
-    * subject: str
+    subject : str
         subject reference (e.g. '31NLI')
 
     Return
     ------
-    * ci: numpy array
+    ci : np.ndarray
         Upper and lower 95% CI for a noisy classifier.
     """
 
@@ -49,7 +68,7 @@ def shuffled_training_labels(subject, n_boot):
     attention_df = pd.read_csv(root + "Attention/Behavior/" + subject + ".txt")
     attention = mne.read_epochs(root + "Attention/6_decim/" + subject + "-epo.fif")
 
-    attention.crop(0.2, 0.5)  # Only select time of interest to save memory
+    attention.crop(0.2, 0.5)  # Only select time window of interest to save memory
 
     # TNT data
     tnt_df = pd.read_csv(root + "TNT/Behavior/" + subject + ".txt")
@@ -90,5 +109,5 @@ def shuffled_training_labels(subject, n_boot):
 # %% Run
 if __name__ == "__main__":
 
-    for subject in names[2:]:
+    for subject in names:
         shuffled_training_labels(subject, n_boot=200)

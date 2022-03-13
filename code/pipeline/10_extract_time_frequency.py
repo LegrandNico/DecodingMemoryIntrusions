@@ -1,10 +1,11 @@
 # Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
 
-import pandas as pd
-import numpy as np
-import os
 import ntpath
+import os
+
 import mne
+import numpy as np
+import pandas as pd
 from mne.time_frequency import tfr_multitaper
 
 task = "TNT"

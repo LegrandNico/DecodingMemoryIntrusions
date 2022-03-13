@@ -1,17 +1,39 @@
 # Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
 
-from autoreject import AutoReject
 import matplotlib.pyplot as plt
 import mne
+from autoreject import AutoReject
 
 root = "E:/EEG_wd/Machine_learning/"
 
 # Subjects ID
 names = names = [
-    "31NLI", "32CVI", "34LME", "35QSY", "36LSA", "37BMA", "38MAX", "39BDA", "40MMA",
-    "41BAL", "42SPE", "44SMU", "45MJA", "46SQU", "47HMA", "50JOC", "52PFA", "53SMA",
-    "55MNI", "56BCL", "57NCO", "58BAN", "59DIN", "60CAN"
-    ]
+    "31NLI",
+    "32CVI",
+    "34LME",
+    "35QSY",
+    "36LSA",
+    "37BMA",
+    "38MAX",
+    "39BDA",
+    "40MMA",
+    "41BAL",
+    "42SPE",
+    "44SMU",
+    "45MJA",
+    "46SQU",
+    "47HMA",
+    "50JOC",
+    "52PFA",
+    "53SMA",
+    "55MNI",
+    "56BCL",
+    "57NCO",
+    "58BAN",
+    "59DIN",
+    "60CAN",
+]
+
 
 def run_autoreject(subject: str, task: str):
     """Interpolate bad epochs/sensors using Autoreject.
@@ -78,5 +100,5 @@ def run_autoreject(subject: str, task: str):
 if __name__ == "__main__":
 
     for subject in names:
-        for task in ['TNT', 'Attention']:
+        for task in ["TNT", "Attention"]:
             run_autoreject(subject, task)

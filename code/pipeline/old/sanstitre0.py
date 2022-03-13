@@ -1,11 +1,12 @@
 # Author: Nicolas Legrand (legrand@cyceron.fr)
 
-import seaborn as sns
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
-import os
-import peakutils
 import pandas as pd
+import peakutils
+import seaborn as sns
 from scipy.fftpack import fftfreq
 
 root = "E:/EEG_wd/Machine_learning/"

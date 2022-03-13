@@ -1,7 +1,8 @@
 # Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
 
-import mne
 import os
+
+import mne
 
 out = "D:/EEG_wd/Machine_learning/"
 root = "D:/ENGRAMME/GROUPE_2/"

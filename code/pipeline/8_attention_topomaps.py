@@ -1,16 +1,16 @@
 # Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
 
 
-import seaborn as sns
-import matplotlib.pyplot as plt
-import numpy as np
-import mne
 import os
-import pandas as pd
-from sklearn.preprocessing import StandardScaler
-from sklearn.ensemble import RandomForestClassifier
 
+import matplotlib.pyplot as plt
+import mne
+import numpy as np
+import pandas as pd
+import seaborn as sns
 from scipy.stats import trim_mean, zscore
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import StandardScaler
 
 trim = lambda x: trim_mean(x, 0.1, axis=0)
 
