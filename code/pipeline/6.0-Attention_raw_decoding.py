@@ -1,4 +1,4 @@
-# Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
+# Author: Nicolas Legrand (legrand@cyceron.fr)
 
 import matplotlib.pyplot as plt
 import mne
@@ -48,6 +48,8 @@ classifier = RandomForestClassifier(
 # =======================
 # %% Decoding - Attention
 # =======================
+
+
 def run_decoding_attention(
     subject: str, classifier: RandomForestClassifier
 ) -> np.ndarray:
@@ -63,11 +65,7 @@ def run_decoding_attention(
     Return
     ------
     scores : np.ndarray
-        ROC-AUC scores, time * 10 fold CV.
-
-    References
-    ----------
-    ..[1] https://mne-tools.github.io/stable/auto_examples/decoding/plot_decoding_spatio_temporal_source.html
+        ROC-AUC scores, time * fold CV.
 
     """
 

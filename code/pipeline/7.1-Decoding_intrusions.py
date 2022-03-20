@@ -1,31 +1,21 @@
-# Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
+# Author: Nicolas Legrand (legrand@cyceron.fr)
 
 import itertools
-import os
+from typing import Tuple
 
 import matplotlib.pyplot as plt
 import mne
 import numpy as np
 import pandas as pd
 import peakutils
-import pingouin as pg
 import seaborn as sns
-from mne.decoding import (GeneralizingEstimator, LinearModel, SlidingEstimator,
-                          cross_val_multiscore, get_coef)
-from mne.stats import permutation_cluster_1samp_test, permutation_t_test
-from scipy import stats
-from scipy.ndimage.filters import gaussian_filter1d
-from sklearn import metrics
-from sklearn.ensemble import ExtraTreesClassifier, RandomForestClassifier
-from sklearn.metrics import (accuracy_score, average_precision_score,
-                             balanced_accuracy_score, confusion_matrix,
-                             f1_score, precision_score, recall_score,
-                             roc_auc_score)
-from sklearn.model_selection import cross_val_score
+from mne.decoding import GeneralizingEstimator
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import confusion_matrix, roc_auc_score
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
-root = "E:/EEG_wd/Machine_learning/"
+root = "D:/EEG_wd/Machine_learning/"
 
 # Subjects ID
 names = names = [
@@ -59,86 +49,28 @@ classifier = RandomForestClassifier(
     class_weight="balanced", n_estimators=50, random_state=42
 )
 
-# %% extract TNT
-def data_tnt(subject):
-
-    if subject in ["33FAM", "49STH", "54CCA"]:
-        data_path = "E:/ENGRAMME/Exclus/GROUPE_2/EEG/"
-        criterion_path = "E:/ENGRAMME/Exclus/GROUPE_2/COMPORTEMENT/"
-    else:
-        data_path = "E:/ENGRAMME/GROUPE_2/EEG/"
-        criterion_path = "E:/ENGRAMME/GROUPE_2/COMPORTEMENT/"
-
-    # Load preprocessed epochs
-    in_epoch = root + "TNT/5_autoreject/" + subject + "-epo.fif"
-    epochs_TNT = mne.read_epochs(in_epoch, preload=True)
-    epochs_TNT.pick_types(
-        emg=False, eeg=True, stim=False, eog=False, misc=False, exclude="bads"
-    )
-
-    # Load e-prime file
-    eprime_df = data_path + subject + "/" + subject + "_t.txt"
-    eprime = pd.read_csv(eprime_df, skiprows=1, sep="\t")
-    eprime = eprime[
-        [
-            "Cond1",
-            "Cond2",
-            "Image.OnsetTime",
-            "ImageFond",
-            "Black.RESP",
-            "ListImage.Cycle",
-        ]
-    ]
-    eprime = eprime.drop(eprime.index[[97, 195, 293]])
-    eprime["ListImage.Cycle"] = eprime["ListImage.Cycle"] - 1
-    eprime.reset_index(inplace=True)
-
-    # Droped epochs_TNT
-    eprime = eprime[[not i for i in epochs_TNT.drop_log]]
-
-    # Remove criterion
-    Criterion = pd.read_csv(
-        criterion_path + subject + "/TNT/criterion.txt",
-        encoding="latin1",
-        sep="\t",
-        nrows=78,
-    )
-    forgotten = [
-        ntpath.basename(i) for i in Criterion[" Image"][Criterion[" FinalRecall"] == 0]
-    ]
-
-    if len(forgotten):
-        epochs_TNT.drop(eprime["ImageFond"].str.contains("|".join(forgotten)))
-        eprime = eprime[~eprime["ImageFond"].str.contains("|".join(forgotten))]
-
-    return epochs_TNT, eprime
-
-
 # =========================================
 # %% Decoding - Attention -> TNT
 # =========================================
 
 
-def run_decoding_attention_tnt(subject, classifier):
-    """
-    Run a generalized sliding decoder (GAT). Train on Attention, and predict
+def run_decoding_attention_tnt(subject: str, classifier):
+    """Run a generalized sliding decoder (GAT). Train on Attention, and predict
     probabilities of mental intrusion on TNT.
 
     Parameters
     ----------
-    * subject: str
+    subject : str
         subject reference (e.g. '31NLI')
-    * classifier: sklearn object
+    classifier : sklearn object
         Define the ML kernel to use.
 
     Return
     ------
-    * scores: numpy array
+    scores : numpy array
         Probabilities for intrusion/no-intrusions * time * trials.
-    * labels: True trial's labels
-    References
-    ----------
-    [1]: https://mne-tools.github.io/stable/auto_examples/decoding/plot_decoding_time_generalization_conditions.html?highlight=generalization
+    labels : True trial's labels.
+
     """
 
     # Load data from the attention task
@@ -147,7 +79,7 @@ def run_decoding_attention_tnt(subject, classifier):
 
     attention.crop(
         0.2, 0.5
-    )  # Only select window of interest (200ms after the intrusive image) to save memory.
+    )  # Only select window of interest (200ms after the central image) to save memory
 
     # Define training features and labels
     X_train = attention._data[attention_df.Cond1 != "Think", :, :]
@@ -179,8 +111,7 @@ def run_decoding_attention_tnt(subject, classifier):
 # ===========================
 
 
-def extract_decoding(subject, overwrite=True):
-
+def extract_decoding(subject: str, overwrite: bool = True):
     """
     Run decoding the pipeline if overwrite = True, else load the .npy file.
     """
@@ -212,27 +143,25 @@ def extract_decoding(subject, overwrite=True):
 # =============================================================================
 
 
-def testing_decoder(exclude_peak):
-    """
-    Find intrusions in the probabilities estimated by the decoders.
-    Apply a gaussian filter and search peak. Grid search for threshold [0.5 - 1] and
-    attention pattern [200 - 400ms after intrusive image apparition].
+def testing_decoder(
+    exclude_peak: int,
+) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    """Find intrusions in the probabilities estimated by the decoders.
 
     Parameters
     ----------
-    * exclude_peak: int
-        Time window to exclude before intrusions (* 10ms)
+    exclude_peak : int
+        Time window to exclude before intrusions (* 10ms).
 
     Return
     ------
-    * final_df: Pandas DataFrame
+    final_df : pd.DataFrame
         Best scores.
-
-    * output_df: Pandas DataFrame
+    output_df : pd.DataFrame
         All the classifiers.
-
-    * cm_final: Pandas DataFrame
+    cm_final : pd.DataFrame
         Confusion matrix for the best classifiers.
+
     """
 
     output_df, cm_final = pd.DataFrame([]), []
@@ -268,8 +197,8 @@ def testing_decoder(exclude_peak):
                     for id in indexes:
 
                         if (id > exclude_peak) & (
-                            id < 310
-                        ):  # Exclude peak < 400ms  & > 2900 ms after stim presentation
+                            id < 317
+                        ):  # Exclude peak < 200ms  & > 2970 ms after stim presentation
 
                             # Check that peak > 95 CI
                             if length == 1:

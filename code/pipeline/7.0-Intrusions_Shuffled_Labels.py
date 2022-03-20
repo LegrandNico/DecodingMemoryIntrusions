@@ -1,10 +1,10 @@
-# Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
+# Author: Nicolas Legrand (legrand@cyceron.fr)
 
 import mne
 import numpy as np
 import pandas as pd
 from mne.decoding import GeneralizingEstimator
-from sklearn.ensemble.forest import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
@@ -42,16 +42,12 @@ classifier = RandomForestClassifier(
     class_weight="balanced", n_estimators=50, random_state=42
 )
 
-root = "E:/EEG_wd/Machine_learning/"
-
 
 # =========================================
 # %% Random label Decoding - Attention -> TNT
 # =========================================
 def shuffled_training_labels(subject: str, n_boot: int) -> np.ndarray:
-
-    """
-    Run a generalized sliding decoder (GAT). Train on shuffled Attention labels.
+    """Run a generalized sliding decoder (GAT). Train on shuffled Attention labels.
 
     Parameters
     ----------
@@ -62,6 +58,7 @@ def shuffled_training_labels(subject: str, n_boot: int) -> np.ndarray:
     ------
     ci : np.ndarray
         Upper and lower 95% CI for a noisy classifier.
+
     """
 
     # Attention data
@@ -86,7 +83,7 @@ def shuffled_training_labels(subject: str, n_boot: int) -> np.ndarray:
         X_train = attention._data[attention_df.Cond1 != "Think", :, :]
         y_train = attention_df.Cond1[attention_df.Cond1 != "Think"] == "No-Think"
 
-        # Shuffled the trainning labels
+        # Shuffle the trainning labels
         labels = y_train.sample(frac=1)
 
         # Fit the model

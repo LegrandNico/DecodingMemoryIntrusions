@@ -1,15 +1,13 @@
 # Author: Nicolas Legrand (legrand@cyceron.fr)
 
 
-import os
-
 import matplotlib.pyplot as plt
 import mne
 import numpy as np
 import pandas as pd
 from mne.decoding import SlidingEstimator, cross_val_multiscore
 from mne.time_frequency import tfr_morlet
-from sklearn.ensemble.forest import RandomForestClassifier
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
@@ -49,10 +47,11 @@ classifier = RandomForestClassifier(
     class_weight="balanced", n_estimators=50, random_state=42
 )
 
+
 # =============================================================================
 # %%
 # =============================================================================
-def data_attention(subject, eeg=True):
+def data_attention(subject: str, eeg: bool = True):
 
     # Load e-prime file
     eprime_df = data_path + subject + "/" + subject + "_a.txt"
@@ -100,7 +99,9 @@ def data_attention(subject, eeg=True):
 # =========================================
 
 
-def attention_TF_decoding(subject, freqs=np.arange(3, 30, 1), decim=20):
+def attention_TF_decoding(
+    subject: str, freqs: np.ndarray = np.arange(3, 30, 1), decim: int = 20
+):
 
     # Import behavioral and EEG data.
     attention, attention_df = data_attention(subject)
@@ -147,7 +148,7 @@ def attention_TF_decoding(subject, freqs=np.arange(3, 30, 1), decim=20):
 if __name__ == "__main__":
 
     total = []
-    for subject in names[12:]:
+    for subject in names:
         subject_score = attention_TF_decoding(subject)
         total.append(subject_score)
         np.save(

@@ -1,6 +1,4 @@
-# Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
-
-import os
+# Author: Nicolas Legrand (legrand@cyceron.fr)
 
 import matplotlib.pyplot as plt
 import mne
@@ -8,8 +6,34 @@ import numpy as np
 from mne.preprocessing import ICA
 
 root = "E:/EEG_wd/Machine_learning/"
-names = os.listdir(root + "All_frequencies_multitaper")  # Subjects ID
-names = sorted(list(set([subject[:5] for subject in names])))
+
+# Subjects ID
+names = names = [
+    "31NLI",
+    "32CVI",
+    "34LME",
+    "35QSY",
+    "36LSA",
+    "37BMA",
+    "38MAX",
+    "39BDA",
+    "40MMA",
+    "41BAL",
+    "42SPE",
+    "44SMU",
+    "45MJA",
+    "46SQU",
+    "47HMA",
+    "50JOC",
+    "52PFA",
+    "53SMA",
+    "55MNI",
+    "56BCL",
+    "57NCO",
+    "58BAN",
+    "59DIN",
+    "60CAN",
+]
 
 
 def run_ICA(subject, task):
@@ -56,7 +80,7 @@ def run_ICA(subject, task):
         axs[i].axhline(y=-0.5, linestyle="--", color="r")
         axs[i].axhline(y=0.5, linestyle="--", color="r")
 
-    ## Comment for manual selection
+    #  Uncomment for manual selection
     #        for i in inds:
     #            if not i in eog_inds:
     #                eog_inds.append(i)
@@ -84,5 +108,5 @@ def run_ICA(subject, task):
 if __name__ == "__main__":
 
     for subject in names:
-        #        for task in ['Attention', 'TNT']:
-        run_ICA(subject, task)
+        for task in ["Attention", "TNT"]:
+            run_ICA(subject, task)

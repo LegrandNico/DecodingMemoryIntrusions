@@ -1,5 +1,4 @@
-# Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
-
+# Author: Nicolas Legrand (legrand@cyceron.fr)
 
 import os
 
@@ -7,7 +6,6 @@ import matplotlib.pyplot as plt
 import mne
 import numpy as np
 import pandas as pd
-import seaborn as sns
 from scipy.stats import trim_mean, zscore
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import StandardScaler
@@ -18,19 +16,42 @@ classifier = RandomForestClassifier(
     class_weight="balanced", n_estimators=500, random_state=42
 )
 
-root = "E:/EEG_wd/Machine_learning/"
-names = os.listdir(root + "TNT/1_raw")  # Subjects ID
-names = sorted(list(set([subject[:5] for subject in names])))
+root = "D:/EEG_wd/Machine_learning/"
 
-cwd = os.getcwd()
+# Subjects ID
+names = names = [
+    "31NLI",
+    "32CVI",
+    "34LME",
+    "35QSY",
+    "36LSA",
+    "37BMA",
+    "38MAX",
+    "39BDA",
+    "40MMA",
+    "41BAL",
+    "42SPE",
+    "44SMU",
+    "45MJA",
+    "46SQU",
+    "47HMA",
+    "50JOC",
+    "52PFA",
+    "53SMA",
+    "55MNI",
+    "56BCL",
+    "57NCO",
+    "58BAN",
+    "59DIN",
+    "60CAN",
+]
+
 # =============================================================================
 # %% Topomap of selected patterns
 # =============================================================================
 
 """
-Plot the averaged topomap of selected attentional patterns 
-to decode intrusion.
-
+Plot the averaged topomap of selected attentional patterns to decode intrusion.
 """
 
 # Load the selected classifiers
@@ -40,6 +61,8 @@ final_df = final_df.drop_duplicates(subset="Subject", keep="first")
 gini = []
 for subject in names:
 
+    # Extract the peaks classifier timing
+    # (time start 200ms after image apprearance)
     time = final_df[final_df.Subject == subject].Time.iloc[0] + 40
 
     # Import behavioral and EEG data.
@@ -57,13 +80,14 @@ for subject in names:
     classifier.fit(data, labels)
     gini.append(classifier.feature_importances_)
 
-attention = attention.average()
+# attention = attention.average()
 
 # GINI index
 gini = np.asarray(gini)
-for i in range(27):
+for i in range(gini.shape[0]):
     gini[i] = zscore(gini[i])
 
+from mne.stats import permutation_t_test
 from scipy.stats import ttest_1samp
 
 t, p = ttest_1samp(gini, axis=0, popmean=0)

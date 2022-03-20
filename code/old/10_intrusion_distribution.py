@@ -1,4 +1,4 @@
-# Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
+# Author: Nicolas Legrand (legrand@cyceron.fr)
 
 import os
 
@@ -143,6 +143,7 @@ if __name__ == "__main__":
     data = intrusion_df.groupby(["Subject", "Block", "Emotion"], as_index=False).mean()
 
     # Plot averaged temporal distribution
+    plt.figure(figsize=(12, 5))
     plt.title("Distribution of intrusion across time")
     sns.violinplot(data=data, x="Block", hue="Emotion", y="Time")
     plt.tight_layout()

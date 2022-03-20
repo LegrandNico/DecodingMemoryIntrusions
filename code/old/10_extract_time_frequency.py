@@ -1,4 +1,4 @@
-# Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
+# Author: Nicolas Legrand (legrand@cyceron.fr)
 
 import ntpath
 import os
@@ -18,12 +18,8 @@ root = "D:/EEG_wd/Machine_learning/"
 # %% extract TNT
 def data_tnt(subject):
 
-    if subject in ["33FAM", "49STH", "54CCA"]:
-        data_path = "D:/ENGRAMME/Exclus/GROUPE_2/EEG/"
-        criterion_path = "D:/ENGRAMME/Exclus/GROUPE_2/COMPORTEMENT/"
-    else:
-        data_path = "D:/ENGRAMME/GROUPE_2/EEG/"
-        criterion_path = "D:/ENGRAMME/GROUPE_2/COMPORTEMENT/"
+    data_path = "D:/ENGRAMME/GROUPE_2/EEG/"
+    criterion_path = "D:/ENGRAMME/GROUPE_2/COMPORTEMENT/"
 
     # Load preprocessed epochs
     in_epoch = root + "TNT/5_autoreject/" + subject + "-epo.fif"
@@ -53,14 +49,14 @@ def data_tnt(subject):
     eprime = eprime[[not i for i in epochs_TNT.drop_log]]
 
     # Remove criterion
-    Criterion = pd.read_csv(
+    criterion = pd.read_csv(
         criterion_path + subject + "/TNT/criterion.txt",
         encoding="latin1",
         sep="\t",
         nrows=78,
     )
     forgotten = [
-        ntpath.basename(i) for i in Criterion[" Image"][Criterion[" FinalRecall"] == 0]
+        ntpath.basename(i) for i in criterion[" Image"][criterion[" FinalRecall"] == 0]
     ]
 
     if len(forgotten):
@@ -75,12 +71,12 @@ def data_tnt(subject):
 # =============================================================================
 
 
-def extract_frequencies(subject, freqs, decim):
+def extract_frequencies(subject: str, freqs: int, decim: int):
     """Filter No-Think epochs using multitaper.
 
     Input
     -----
-    * subject: str
+    subject: str
         Subject reference.
 
     freqs: array like

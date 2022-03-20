@@ -7,6 +7,34 @@ import pandas as pd
 
 root = "E:/EEG_wd/Machine_learning/"
 
+# Subjects ID
+names = names = [
+    "31NLI",
+    "32CVI",
+    "34LME",
+    "35QSY",
+    "36LSA",
+    "37BMA",
+    "38MAX",
+    "39BDA",
+    "40MMA",
+    "41BAL",
+    "42SPE",
+    "44SMU",
+    "45MJA",
+    "46SQU",
+    "47HMA",
+    "50JOC",
+    "52PFA",
+    "53SMA",
+    "55MNI",
+    "56BCL",
+    "57NCO",
+    "58BAN",
+    "59DIN",
+    "60CAN",
+]
+
 # Files name
 fname = {
     "TNT": {"eeg": "_t.fil.edf", "eprime": "_t.txt"},
@@ -16,10 +44,7 @@ fname = {
 
 def data_attention(subject, eeg=True):
 
-    if subject in ["33FAM", "49STH", "54CCA"]:
-        data_path = "E:/ENGRAMME/Exclus/GROUPE_2/EEG/"
-    else:
-        data_path = "E:/ENGRAMME/GROUPE_2/EEG/"
+    data_path = "E:/ENGRAMME/GROUPE_2/EEG/"
 
     # Load e-prime file
     eprime_df = data_path + subject + "/" + subject + fname["Attention"]["eprime"]
@@ -65,12 +90,8 @@ def data_attention(subject, eeg=True):
 # %% extract TNT
 def data_tnt(subject):
 
-    if subject in ["33FAM", "49STH", "54CCA"]:
-        data_path = "E:/ENGRAMME/Exclus/GROUPE_2/EEG/"
-        criterion_path = "E:/ENGRAMME/Exclus/GROUPE_2/COMPORTEMENT/"
-    else:
-        data_path = "E:/ENGRAMME/GROUPE_2/EEG/"
-        criterion_path = "E:/ENGRAMME/GROUPE_2/COMPORTEMENT/"
+    data_path = "E:/ENGRAMME/GROUPE_2/EEG/"
+    criterion_path = "E:/ENGRAMME/GROUPE_2/COMPORTEMENT/"
 
     # Load preprocessed epochs
     in_epoch = root + "TNT/5_autoreject/" + subject + "-epo.fif"
@@ -100,14 +121,14 @@ def data_tnt(subject):
     eprime = eprime[[not i for i in epochs_TNT.drop_log]]
 
     # Remove criterion
-    Criterion = pd.read_csv(
+    criterion = pd.read_csv(
         criterion_path + subject + "/TNT/criterion.txt",
         encoding="latin1",
         sep="\t",
         nrows=78,
     )
     forgotten = [
-        ntpath.basename(i) for i in Criterion[" Image"][Criterion[" FinalRecall"] == 0]
+        ntpath.basename(i) for i in criterion[" Image"][criterion[" FinalRecall"] == 0]
     ]
 
     if len(forgotten):
@@ -121,21 +142,21 @@ def data_tnt(subject):
 
 
 def extract_raws(subject, decim):
-    """
-    Extract raw data from proprocessed epochs. Crop, decimate and apply
-    baseline to save memory.
+    """Extract raw data from proprocessed epochs. Crop, decimate and apply baseline to
+    save memory.
 
     Parameters
     ----------
-    * subject: str
+    subject: str
         subject reference (e.g. '31NLI')
-    * decim: int
-        Decimate parameter. Default set to 20 (i.e. 50 sample /s)
+    decim: int
+        Decimate parameter.
 
-    Return
-    ------
-    * Will save the processed .fif data in /Raws folder and the .txt behavioral
-    data in the /Behavior folder.
+    Notes
+    -----
+        This function Will save the processed .fif data in /Raws folder and the .txt
+        behavioral data in the `/Behavior` folder.
+
     """
     # Extract data from the Attention task
     attention, attention_df = data_attention(subject)

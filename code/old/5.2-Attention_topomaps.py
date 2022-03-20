@@ -1,4 +1,4 @@
-# Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
+# Author: Nicolas Legrand (legrand@cyceron.fr)
 
 import os
 
@@ -6,25 +6,49 @@ import matplotlib.pyplot as plt
 import mne
 import numpy as np
 import pandas as pd
-import pingouin as pg
 import seaborn as sns
 from scipy.stats import trim_mean
 
-trim = lambda x: trim_mean(x, 0.1, axis=0)
+
+def trim(x):
+    return trim_mean(x, 0.1, axis=0)
+
 
 root = "E:/EEG_wd/Machine_learning/"
-names = os.listdir(root + "TNT/1_raw")  # Subjects ID
-names = sorted(list(set([subject[:5] for subject in names])))
 
-root = "E:/EEG_wd/Machine_learning/"
+# Subjects ID
+names = [
+    "31NLI",
+    "32CVI",
+    "34LME",
+    "35QSY",
+    "36LSA",
+    "37BMA",
+    "38MAX",
+    "39BDA",
+    "40MMA",
+    "41BAL",
+    "42SPE",
+    "44SMU",
+    "45MJA",
+    "46SQU",
+    "47HMA",
+    "50JOC",
+    "52PFA",
+    "53SMA",
+    "55MNI",
+    "56BCL",
+    "57NCO",
+    "58BAN",
+    "59DIN",
+    "60CAN",
+]
 
 # =============================================================================
 # %% Topomap of selected patterns
 # =============================================================================
-
 """
-Plot the averaged topomap of selected attentional patterns 
-to decode intrusion.
+Plot the averaged topomap of selected attentional patterns to decode intrusion.
 
 """
 

@@ -1,6 +1,4 @@
-# Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
-
-import os
+# Author: Nicolas Legrand (legrand@cyceron.fr)
 
 import matplotlib.pyplot as plt
 import mne
@@ -8,8 +6,34 @@ import pandas as pd
 from autoreject import Ransac
 
 root = "E:/EEG_wd/Machine_learning/"
-names = os.listdir(root + "Attention/4_ICA/")
-names = sorted(list(set([subject[:5] for subject in names])))
+
+# Subjects ID
+names = names = [
+    "31NLI",
+    "32CVI",
+    "34LME",
+    "35QSY",
+    "36LSA",
+    "37BMA",
+    "38MAX",
+    "39BDA",
+    "40MMA",
+    "41BAL",
+    "42SPE",
+    "44SMU",
+    "45MJA",
+    "46SQU",
+    "47HMA",
+    "50JOC",
+    "52PFA",
+    "53SMA",
+    "55MNI",
+    "56BCL",
+    "57NCO",
+    "58BAN",
+    "59DIN",
+    "60CAN",
+]
 
 fname = {
     "Attention": {"eeg": "_a.fil.edf", "eprime": "_a.txt"},

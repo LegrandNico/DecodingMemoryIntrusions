@@ -1,6 +1,4 @@
-# Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
-
-import os
+# Author: Nicolas Legrand (legrand@cyceron.fr)
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -9,11 +7,37 @@ import peakutils
 import seaborn as sns
 
 root = "D:/EEG_wd/Machine_learning/"
-names = os.listdir(root + "TNT/1_raw")  # Subjects ID
-names = sorted(list(set([subject[:5] for subject in names])))
+
+# Subjects ID
+names = names = [
+    "31NLI",
+    "32CVI",
+    "34LME",
+    "35QSY",
+    "36LSA",
+    "37BMA",
+    "38MAX",
+    "39BDA",
+    "40MMA",
+    "41BAL",
+    "42SPE",
+    "44SMU",
+    "45MJA",
+    "46SQU",
+    "47HMA",
+    "50JOC",
+    "52PFA",
+    "53SMA",
+    "55MNI",
+    "56BCL",
+    "57NCO",
+    "58BAN",
+    "59DIN",
+    "60CAN",
+]
 
 
-def mental_events(exclude_peak):
+def mental_events(exclude_peak: int):
     """Count and plot the number of mental events.
 
     Parameters
@@ -21,14 +45,10 @@ def mental_events(exclude_peak):
     exclude_peak: int
         Time window to exclude before intrusions (* 10ms).
 
-    Return
-    ------
-    figure: Matplotlib instance
-
     """
 
     # Load the selected classifiers
-    final_df = pd.read_csv(root + "Classifiers.txt")
+    final_df = pd.read_csv(root + "backup/Classifiers.txt")
     final_df = final_df.drop_duplicates(subset="Subject", keep="first")
 
     intrusion_df = pd.DataFrame([])  # Intrusion count
@@ -69,8 +89,8 @@ def mental_events(exclude_peak):
 
                 # Label as an intrusion if the peak > 95% CI
                 for idx in indexes:
-                    # Exclude peak < 200ms after stim presentation
-                    if (idx > exclude_peak) & (idx < 310):
+                    # Exclude peak < 200ms  & > 2970 ms after stim presentation
+                    if (idx > exclude_peak) & (idx < 317):
 
                         # Check that peak > 95 CI
                         if length == 1:
@@ -204,7 +224,7 @@ def mental_events(exclude_peak):
             value_vars=["Events"],
         )
 
-        fig, ax = plt.subplots(figsize=(8, 6))
+        _, ax = plt.subplots(figsize=(8, 6))
         plt.title("Reported and decoded intrusions")
         sns.lineplot(
             data=df,

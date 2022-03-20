@@ -1,4 +1,4 @@
-# Author: Nicolas Legrand (nicolas.legrand@cfin.au.dk)
+# Author: Nicolas Legrand (legrand@cyceron.fr)
 
 import os
 
@@ -6,8 +6,34 @@ import mne
 
 out = "D:/EEG_wd/Machine_learning/"
 root = "D:/ENGRAMME/GROUPE_2/"
-names = os.listdir(root + "EEG/")  # Subjects ID
-names = sorted(list(set([subject[:5] for subject in names])))
+
+# Subjects ID
+names = names = [
+    "31NLI",
+    "32CVI",
+    "34LME",
+    "35QSY",
+    "36LSA",
+    "37BMA",
+    "38MAX",
+    "39BDA",
+    "40MMA",
+    "41BAL",
+    "42SPE",
+    "44SMU",
+    "45MJA",
+    "46SQU",
+    "47HMA",
+    "50JOC",
+    "52PFA",
+    "53SMA",
+    "55MNI",
+    "56BCL",
+    "57NCO",
+    "58BAN",
+    "59DIN",
+    "60CAN",
+]
 
 # Parameter
 drop = [
