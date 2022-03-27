@@ -54,8 +54,8 @@ def shuffled_training_labels(subject: str, n_boot: int) -> np.ndarray:
     subject : str
         subject reference (e.g. '31NLI')
 
-    Return
-    ------
+    Returns
+    -------
     ci : np.ndarray
         Upper and lower 95% CI for a noisy classifier.
 
