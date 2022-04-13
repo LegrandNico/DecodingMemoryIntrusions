@@ -15,7 +15,8 @@ from sklearn.metrics import confusion_matrix, roc_auc_score
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
-root = "D:/EEG_wd/Machine_learning/"
+#root = "D:/EEG_wd/Machine_learning/"
+root = "/home/nicolas/git/DecodingMemoryIntrusions/data/"
 
 # Subjects ID
 names = names = [
@@ -54,22 +55,25 @@ classifier = RandomForestClassifier(
 # =========================================
 
 
-def run_decoding_attention_tnt(subject: str, classifier):
+def run_decoding_attention_tnt(subject: str, classifier, condition: str):
     """Run a generalized sliding decoder (GAT). Train on Attention, and predict
     probabilities of mental intrusion on TNT.
 
     Parameters
     ----------
     subject : str
-        subject reference (e.g. '31NLI')
+        subject reference (e.g. '31NLI').
     classifier : sklearn object
         Define the ML kernel to use.
+    condition : str
+        The TNT condition (`"Think"` or `"No-Think"`).
 
-    Return
-    ------
-    scores : numpy array
+    Returns
+    -------
+    scores : np.ndarray
         Probabilities for intrusion/no-intrusions * time * trials.
-    labels : True trial's labels.
+    labels : np.ndarray
+        True trial's labels.
 
     """
 
@@ -98,8 +102,8 @@ def run_decoding_attention_tnt(subject: str, classifier):
     tnt = mne.read_epochs(root + "TNT/6_decim/" + subject + "-epo.fif")
 
     # Define testing features and labels
-    X_test = tnt._data[(tnt_df.Cond1 == "No-Think"), :, :]
-    y_test = tnt_df["Black.RESP"][(tnt_df.Cond1 == "No-Think")] != 1
+    X_test = tnt._data[(tnt_df.Cond1 == condition), :, :]
+    y_test = tnt_df["Black.RESP"][(tnt_df.Cond1 == condition)] != 1
 
     out = time_gen.predict_proba(X_test)  # Predict probabilities
 
@@ -111,28 +115,45 @@ def run_decoding_attention_tnt(subject: str, classifier):
 # ===========================
 
 
-def extract_decoding(subject: str, overwrite: bool = True):
+def extract_decoding(subject: str, overwrite: bool = True, condition: str = "No-Think") -> Tuple[np.ndarray, np.ndarray]:
     """
     Run decoding the pipeline if overwrite = True, else load the .npy file.
+
+    Parameters
+    ----------
+    subject : str
+        The participant ID.
+    overwrite : bool
+        If `True`, will overwrite the data.
+    condition : str
+        The TNT condition (`"Think"` or `"No-Think"`).
+
+    Returns
+    -------
+    proba : np.ndarray
+        The intrusion probability.
+    labels : np.ndarray
+        The true labels.
+
     """
     if overwrite:
 
-        proba, labels = run_decoding_attention_tnt(subject, classifier)
+        proba, labels = run_decoding_attention_tnt(subject, classifier, condition)
 
         np.save(
-            root + "Results/Attention_TNT_decoding/" + subject + "_proba.npy", proba
+            f"{root}Results/Attention_TNT_decoding/{subject}_{condition}_proba.npy", proba
         )
         np.save(
-            root + "Results/Attention_TNT_decoding/" + subject + "_labels.npy", labels
+            f"{root}Results/Attention_TNT_decoding/{subject}_{condition}_labels.npy", labels
         )
 
     else:
 
         proba = np.load(
-            root + "Results/Attention_TNT_decoding/" + subject + "_proba.npy"
+            f"{root}Results/Attention_TNT_decoding/{subject}_{condition}_proba.npy"
         )
         labels = np.load(
-            root + "Results/Attention_TNT_decoding/" + subject + "_labels.npy"
+            f"{root}Results/Attention_TNT_decoding/{subject}_{condition}_labels.npy"
         )
 
     return proba, labels
@@ -153,8 +174,8 @@ def testing_decoder(
     exclude_peak : int
         Time window to exclude before intrusions (* 10ms).
 
-    Return
-    ------
+    Returns
+    -------
     final_df : pd.DataFrame
         Best scores.
     output_df : pd.DataFrame
@@ -169,130 +190,139 @@ def testing_decoder(
 
         # Load probabilities for intrusions estimated by the classifier
         # trained on the Attention dataset.
-        proba, labels = extract_decoding(subject, overwrite=False)
+        for condition in ["Think", "No-Think"]:
 
-        high_CI = np.load(root + "Results/Shuffled_95CI/" + subject + "-high.npy")
-
-        auc_final = 0
-
-        for time in range(5, 30):  # 250 - 500 ms after intrusive image presentation
-
-            for length in [1, 2, 3, 4, 5]:
-
-                auc_time = 0  # AUC, to be maximized
-
-                data = proba[:, time, :, 1]  # Select the probabilities of an intrusions
-                ci = high_CI[:, time, :]
-
-                total_count = []  # Number of peaks/trials
-                for ii in range(len(data)):
-
-                    cnt = 0
-                    # Find all the peak > 0.5
-                    indexes = peakutils.indexes(
-                        data[ii, :], thres=0.5, min_dist=6, thres_abs=True
-                    )
-
-                    # Label as an intrusion if the peak > 95% CI
-                    for id in indexes:
-
-                        if (id > exclude_peak) & (
-                            id < 317
-                        ):  # Exclude peak < 200ms  & > 2970 ms after stim presentation
-
-                            # Check that peak > 95 CI
-                            if length == 1:
-                                if data[ii, id] > (ci[ii, id]):
-                                    cnt += 1
-                            elif length == 2:
-                                if (data[ii, id] > (ci[ii, id])) & (
-                                    data[ii, id + 1] > (ci[ii, id + 1])
-                                ):
-                                    cnt += 1
-                            elif length == 3:
-                                if (
-                                    (data[ii, id] > (ci[ii, id]))
-                                    & (data[ii, id + 1] > (ci[ii, id + 1]))
-                                    & (data[ii, id + 2] > (ci[ii, id + 2]))
-                                ):
-                                    cnt += 1
-                            elif length == 4:
-                                if (
-                                    (data[ii, id] > (ci[ii, id]))
-                                    & (data[ii, id + 1] > (ci[ii, id + 1]))
-                                    & (data[ii, id + 2] > (ci[ii, id + 2]))
-                                    & (data[ii, id + 3] > (ci[ii, id + 3]))
-                                ):
-                                    cnt += 1
-                            elif length == 5:
-                                if (
-                                    (data[ii, id] > (ci[ii, id]))
-                                    & (data[ii, id + 1] > (ci[ii, id + 1]))
-                                    & (data[ii, id + 2] > (ci[ii, id + 2]))
-                                    & (data[ii, id + 3] > (ci[ii, id + 3]))
-                                    & (data[ii, id + 4] > (ci[ii, id + 4]))
-                                ):
-                                    cnt += 1
-                    total_count.append(cnt)
-
-                pred = (
-                    np.asarray(total_count) > 0
-                )  # Only prediction non-intrusion if npeaks == 0
-
-                auc = roc_auc_score(labels, pred)  # Evaluate model accuracy
-
-                if auc > auc_time:  # Only keep the best model.
-                    auc_time = auc
-                    if auc_time > auc_final:
-                        auc_final = auc_time
-                        cm = confusion_matrix(labels, pred)
-                        cm = cm.astype("float") / cm.sum(axis=1)[:, np.newaxis]
-
-                output_df = output_df.append(
-                    pd.DataFrame(
-                        {
-                            "Subject": subject,
-                            "Time": time,
-                            "Length": length,
-                            "AUC": auc_time,
-                        },
-                        index=[0],
-                    ),
-                    ignore_index=True,
+            proba, labels = extract_decoding(
+                subject, overwrite=True, condition=condition
                 )
-        cm_final.append(cm)
-        plt.rcParams["figure.figsize"] = [6, 6]
-        sns.set_context("notebook")
-        plt.imshow(cm, interpolation="nearest", cmap=plt.cm.Blues, vmin=0.3, vmax=0.7)
-        plt.title("AUC: " + str(auc_final), size=20)
-        tick_marks = np.arange(2)
-        plt.xticks(tick_marks, ["Non-Intrusions", "Intrusion"])
-        plt.yticks(tick_marks, ["Non-Intrusions", "Intrusion"], rotation=90)
 
-        fmt = ".2f"
-        for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
-            plt.text(
-                j,
-                i,
-                format(cm[i, j], fmt),
-                size=15,
-                weight="bold",
-                horizontalalignment="center",
-                color="white" if cm[i, j] > 0.5 else "black",
-            )
-        plt.colorbar()
-        plt.ylabel("True label", size=20, fontweight="bold")
-        plt.xlabel("Predicted label", size=20, fontweight="bold")
-        plt.tight_layout()
-        plt.savefig(root + "Results/Decoding/" + subject + "tnt-decoding.png")
-        plt.close()
+            high_CI = np.load(
+                f"{root}Results/Shuffled_95CI/{condition}/{subject}-high.npy"
+                )
+
+            auc_final = 0
+
+            for time in range(5, 30):  # 250 - 500 ms after intrusive image presentation
+
+                for length in [1, 2, 3, 4, 5]:
+
+                    auc_time = 0  # AUC, to be maximized
+
+                    data = proba[:, time, :, 1]  # Select the probabilities of an intrusions
+                    ci = high_CI[:, time, :]
+
+                    total_count = []  # Number of peaks/trials
+                    for ii in range(len(data)):
+
+                        cnt = 0
+                        # Find all the peak > 0.5
+                        indexes = peakutils.indexes(
+                            data[ii, :], thres=0.5, min_dist=6, thres_abs=True
+                        )
+
+                        # Label as an intrusion if the peak > 95% CI
+                        for id in indexes:
+
+                            if (id > exclude_peak) & (
+                                id < 317
+                            ):  # Exclude peak < 200ms  & > 2970 ms after stim presentation
+
+                                # Check that peak > 95 CI
+                                if length == 1:
+                                    if data[ii, id] > (ci[ii, id]):
+                                        cnt += 1
+                                elif length == 2:
+                                    if (data[ii, id] > (ci[ii, id])) & (
+                                        data[ii, id + 1] > (ci[ii, id + 1])
+                                    ):
+                                        cnt += 1
+                                elif length == 3:
+                                    if (
+                                        (data[ii, id] > (ci[ii, id]))
+                                        & (data[ii, id + 1] > (ci[ii, id + 1]))
+                                        & (data[ii, id + 2] > (ci[ii, id + 2]))
+                                    ):
+                                        cnt += 1
+                                elif length == 4:
+                                    if (
+                                        (data[ii, id] > (ci[ii, id]))
+                                        & (data[ii, id + 1] > (ci[ii, id + 1]))
+                                        & (data[ii, id + 2] > (ci[ii, id + 2]))
+                                        & (data[ii, id + 3] > (ci[ii, id + 3]))
+                                    ):
+                                        cnt += 1
+                                elif length == 5:
+                                    if (
+                                        (data[ii, id] > (ci[ii, id]))
+                                        & (data[ii, id + 1] > (ci[ii, id + 1]))
+                                        & (data[ii, id + 2] > (ci[ii, id + 2]))
+                                        & (data[ii, id + 3] > (ci[ii, id + 3]))
+                                        & (data[ii, id + 4] > (ci[ii, id + 4]))
+                                    ):
+                                        cnt += 1
+                        total_count.append(cnt)
+
+                    pred = (
+                        np.asarray(total_count) > 0
+                    )  # Only prediction non-intrusion if npeaks == 0
+
+                    try:
+                        auc = roc_auc_score(labels, pred)  # Evaluate model accuracy
+                        if auc > auc_time:  # Only keep the best model.
+                            auc_time = auc
+                            if auc_time > auc_final:
+                                auc_final = auc_time
+                                cm = confusion_matrix(labels, pred)
+                                cm = cm.astype("float") / cm.sum(axis=1)[:, np.newaxis]
+                    except ValueError:
+                        auc = None
+
+                    output_df = output_df.append(
+                        pd.DataFrame(
+                            {
+                                "Subject": subject,
+                                "Condition": condition,
+                                "Time": time,
+                                "Length": length,
+                                "AUC": auc_time,
+                            },
+                            index=[0],
+                        ),
+                        ignore_index=True,
+                    )
+            cm_final.append(cm)
+            plt.rcParams["figure.figsize"] = [6, 6]
+            sns.set_context("notebook")
+            plt.imshow(cm, interpolation="nearest", cmap=plt.cm.Blues, vmin=0.3, vmax=0.7)
+            plt.title("AUC: " + str(auc_final), size=20)
+            tick_marks = np.arange(2)
+            plt.xticks(tick_marks, ["Non-Intrusions", "Intrusion"])
+            plt.yticks(tick_marks, ["Non-Intrusions", "Intrusion"], rotation=90)
+
+            fmt = ".2f"
+            for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
+                plt.text(
+                    j,
+                    i,
+                    format(cm[i, j], fmt),
+                    size=15,
+                    weight="bold",
+                    horizontalalignment="center",
+                    color="white" if cm[i, j] > 0.5 else "black",
+                )
+            plt.colorbar()
+            plt.ylabel("True label", size=20, fontweight="bold")
+            plt.xlabel("Predicted label", size=20, fontweight="bold")
+            plt.tight_layout()
+            plt.savefig(f"{root}Results/Decoding/{subject}_{condition}_tnt-decoding.png")
+            plt.close()
 
     # Save results
     output_df.to_csv(root + "raws.txt")
     np.save(root + "Confusions.npy", np.asarray(cm_final))
 
     # Select best decoders
-    idx = output_df.groupby(["Subject"])["AUC"].transform(max) == output_df["AUC"]
+    idx = output_df.groupby(["Subject", "Condition"])["AUC"].transform(max) == output_df["AUC"]
     final_df = output_df[idx]
 
     final_df.to_csv(root + "Classifiers.txt")

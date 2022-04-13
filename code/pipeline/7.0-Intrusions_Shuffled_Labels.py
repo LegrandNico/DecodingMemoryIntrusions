@@ -1,6 +1,7 @@
 # Author: Nicolas Legrand (legrand@cyceron.fr)
 
 import mne
+import multiprocessing as mp
 import numpy as np
 import pandas as pd
 from mne.decoding import GeneralizingEstimator
@@ -8,7 +9,8 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
-root = "D:/EEG_wd/Machine_learning/"
+# root = "D:/EEG_wd/Machine_learning/"
+root = "/home/nicolas/git/DecodingMemoryIntrusions/data/"
 
 # Subjects ID
 names = [
@@ -46,13 +48,15 @@ classifier = RandomForestClassifier(
 # =========================================
 # %% Random label Decoding - Attention -> TNT
 # =========================================
-def shuffled_training_labels(subject: str, n_boot: int) -> np.ndarray:
+def shuffled_training_labels(subject: str, n_boot: int = 200) -> np.ndarray:
     """Run a generalized sliding decoder (GAT). Train on shuffled Attention labels.
 
     Parameters
     ----------
     subject : str
         subject reference (e.g. '31NLI')
+    n_boot : int
+        Number of permutation.
 
     Returns
     -------
@@ -71,40 +75,44 @@ def shuffled_training_labels(subject: str, n_boot: int) -> np.ndarray:
     tnt_df = pd.read_csv(root + "TNT/Behavior/" + subject + ".txt")
     tnt = mne.read_epochs(root + "TNT/6_decim/" + subject + "-epo.fif")
 
-    shuffled = []
+    for condition in ["No-Think", "Think"]:
 
-    for i in range(n_boot):
+        shuffled = []
 
-        # Classifier
-        clf = make_pipeline(StandardScaler(), classifier)
+        for _ in range(n_boot):
 
-        time_gen = GeneralizingEstimator(clf, scoring="roc_auc", n_jobs=6)
+            # Classifier
+            clf = make_pipeline(StandardScaler(), classifier)
 
-        X_train = attention._data[attention_df.Cond1 != "Think", :, :]
-        y_train = attention_df.Cond1[attention_df.Cond1 != "Think"] == "No-Think"
+            time_gen = GeneralizingEstimator(clf, scoring="roc_auc", n_jobs=1)
 
-        # Shuffle the trainning labels
-        labels = y_train.sample(frac=1)
+            X_train = attention._data[attention_df.Cond1 != "Think", :, :]
+            y_train = attention_df.Cond1[attention_df.Cond1 != "Think"] == "No-Think"
 
-        # Fit the model
-        time_gen.fit(X_train, labels)
+            # Shuffle the trainning labels
+            labels = y_train.sample(frac=1)
 
-        X_test = tnt._data[(tnt_df.Cond1 == "No-Think"), :, :]
+            # Fit the model
+            time_gen.fit(X_train, labels)
 
-        proba = time_gen.predict_proba(X_test)
+            X_test = tnt._data[(tnt_df.Cond1 == condition), :, :]
 
-        shuffled.append(proba)
+            proba = time_gen.predict_proba(X_test)
 
-    shuffled = np.asarray(shuffled)
+            shuffled.append(proba)
 
-    # 95th percentile
-    ci = np.percentile(shuffled[:, :, :, :, 1], 97.5, axis=0)
+        shuffled = np.asarray(shuffled)
 
-    np.save(root + "Results/Shuffled_95CI/" + subject + "-high.npy", ci)
+        # 95th percentile
+        ci = np.percentile(shuffled[:, :, :, :, 1], 97.5, axis=0)
+
+        np.save(f"{root}Results/Shuffled_95CI/{condition}/{subject}-high.npy", ci)
 
 
 # %% Run
 if __name__ == "__main__":
 
-    for subject in names:
-        shuffled_training_labels(subject, n_boot=200)
+    pool = mp.Pool(processes=24)
+    pool.map(shuffled_training_labels, names)
+    pool.close()
+    pool.join()
