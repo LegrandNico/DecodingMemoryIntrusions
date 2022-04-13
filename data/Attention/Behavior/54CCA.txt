@@ -1,0 +1,362 @@
+,Cond1,Cond2,Cond3,Cond4,Image.OnsetTime,Image.RESP,Image.RT,ImageCentre,ImageFond,ListImage.Cycle
+0,Baseline,Neutral,Non vivant,NonOrg,101321,2,2738,banjo.png,Black.jpg,1
+1,No-Think,Neutral,Non vivant,NonOrg,112742,2,2323,usbcable01b.png,Landscapes_048_h.jpg,1
+2,Baseline,Emotion,Vivant,NonOrg,117778,2,2199,beachpaddle01a.png,Black.jpg,1
+3,Baseline,Neutral,Non vivant,Org,122846,1,2614,killerwhale.png,Black.jpg,1
+4,No-Think,Emotion,Non vivant,NonOrg,128499,2,2418,toaster02.png,Objects_151_h.jpg,1
+5,Baseline,Emotion,Non vivant,NonOrg,133751,2,1778,dice02a.png,Black.jpg,1
+6,No-Think,Emotion,Vivant,NonOrg,138319,2,2715,bassguitar.png,People_208_h.jpg,1
+7,No-Think,Neutral,Vivant,NonOrg,156360,2,2788,amphora.png,People_105_h.jpg,1
+8,Think,Neutral,Vivant,NonOrg,162262,1,1700,bib.png,Faces_044_h.jpg,1
+9,No-Think,Emotion,Non vivant,NonOrg,166747,2,2860,scotchtape.png,Landscapes_007_h.jpg,1
+10,No-Think,Emotion,Non vivant,Org,172432,1,1812,tortoise01.png,Objects_233_h.jpg,1
+11,Baseline,Emotion,Non vivant,NonOrg,177051,2,1607,scale01b.png,Black.jpg,1
+12,Think,Neutral,Vivant,NonOrg,181569,1,1492,alarmclock02b.png,People_048_h.jpg,1
+13,Think,Neutral,Vivant,Org,185954,1,1842,kangaroo.png,People_138_h.jpg,1
+14,Think,Neutral,Non vivant,Org,190823,2,1729,dromedary.png,Landscapes_073_h.jpg,1
+15,No-Think,Neutral,Non vivant,Org,195325,1,2829,hen.png,Objects_082_h.jpg,1
+16,Baseline,Emotion,Vivant,NonOrg,201194,2,1098,antenna.png,Black.jpg,1
+17,No-Think,Neutral,Vivant,NonOrg,205312,2,1844,baseball01a.png,Faces_024_h.jpg,1
+18,No-Think,Emotion,Vivant,Org,209880,1,2932,saintbernard.png,People_222_h.jpg,1
+19,No-Think,Neutral,Vivant,Org,215583,1,1665,caribou01.png,Faces_308_h.jpg,1
+20,No-Think,Neutral,Non vivant,NonOrg,220251,2,2212,bikehelmet.png,Landscapes_034_h.jpg,1
+21,Think,Emotion,Vivant,Org,225353,1,2637,tiger02.png,People_202_h.jpg,1
+22,Baseline,Neutral,Vivant,NonOrg,230755,2,1050,bicycle.png,Black.jpg,1
+23,Think,Neutral,Non vivant,Org,234640,2,1631,blackbear.png,Objects_085_h.jpg,1
+24,Baseline,Neutral,Vivant,NonOrg,239275,2,954,backfloat.png,Black.jpg,1
+25,Think,Neutral,Non vivant,NonOrg,243193,2,2271,alarmclock01.png,Landscapes_049_h.jpg,1
+26,Think,Emotion,Non vivant,Org,248179,2,1789,squirrel.png,Objects_157_h.jpg,1
+27,Baseline,Neutral,Non vivant,Org,252864,2,789,raccoon.png,Black.jpg,1
+28,No-Think,Emotion,Non vivant,Org,256615,1,2414,toad.png,Objects_138_h.jpg,1
+29,Think,Neutral,Vivant,Org,262001,1,1890,moose.png,Faces_224_h.jpg,1
+30,Baseline,Neutral,Vivant,Org,266603,1,1060,siamesecat.png,Black.jpg,1
+31,Think,Emotion,Vivant,NonOrg,270637,1,1637,toytractor01b.png,People_129_h.jpg,1
+32,No-Think,Emotion,Vivant,NonOrg,280858,2,2341,airhockeypaddle01a.png,Animals_032_h.jpg,1
+33,Baseline,Emotion,Non vivant,Org,292096,1,1168,sheep.png,Black.jpg,1
+34,Baseline,Emotion,Non vivant,Org,295964,1,1743,swallow.png,Black.jpg,1
+35,Think,Emotion,Vivant,NonOrg,300699,1,2364,binoculars01b.png,Animals_045_h.jpg,1
+36,Baseline,Emotion,Vivant,Org,305885,1,1406,rockbass.png,Black.jpg,1
+37,Baseline,Emotion,Vivant,Org,309969,1,1066,stuffedpuffin.png,Black.jpg,1
+38,Baseline,Neutral,Non vivant,NonOrg,326226,2,2124,bandage.png,Black.jpg,1
+39,Baseline,Neutral,Vivant,Org,331294,1,1322,skunk.png,Black.jpg,1
+40,No-Think,Neutral,Vivant,Org,335563,1,1379,beaver.png,People_155_h.jpg,1
+41,Baseline,Emotion,Vivant,NonOrg,339798,2,1147,beachpaddle01a.png,Black.jpg,2
+42,Think,Neutral,Non vivant,Org,343716,2,1874,blackbear.png,Objects_085_h.jpg,2
+43,No-Think,Neutral,Non vivant,Org,348334,1,2051,hen.png,Objects_082_h.jpg,2
+44,No-Think,Neutral,Vivant,NonOrg,353403,2,2478,baseball01a.png,Faces_024_h.jpg,2
+45,No-Think,Neutral,Non vivant,NonOrg,358855,2,2256,bikehelmet.png,Landscapes_034_h.jpg,2
+46,Baseline,Emotion,Non vivant,Org,364091,1,2491,sheep.png,Black.jpg,2
+47,Think,Neutral,Non vivant,NonOrg,369476,2,2292,armchair01.png,Objects_043_h.jpg,2
+48,Baseline,Emotion,Non vivant,NonOrg,374561,2,868,dice02a.png,Black.jpg,2
+49,No-Think,Emotion,Non vivant,NonOrg,378146,2,1403,toaster02.png,Objects_151_h.jpg,2
+50,Baseline,Neutral,Non vivant,Org,388850,1,1167,killerwhale.png,Black.jpg,2
+51,Think,Emotion,Non vivant,NonOrg,392802,2,1564,aceofdiamond.png,Objects_109_h.jpg,2
+52,Baseline,Neutral,Non vivant,Org,397254,1,1022,raccoon.png,Black.jpg,2
+53,Think,Neutral,Non vivant,NonOrg,401205,2,949,alarmclock01.png,Landscapes_049_h.jpg,2
+54,No-Think,Emotion,Non vivant,Org,405057,1,1939,tortoise01.png,Objects_233_h.jpg,2
+55,Baseline,Neutral,Vivant,NonOrg,409908,2,769,bicycle.png,Black.jpg,2
+56,Baseline,Emotion,Vivant,NonOrg,413426,2,1430,antenna.png,Black.jpg,2
+57,Think,Emotion,Vivant,Org,417561,1,2966,sturgeon.png,Faces_366_h.jpg,2
+58,Think,Neutral,Vivant,Org,429583,1,1883,kangaroo.png,People_138_h.jpg,2
+59,Baseline,Neutral,Non vivant,NonOrg,434485,2,1112,bandage.png,Black.jpg,2
+60,No-Think,Emotion,Vivant,Org,438570,1,2248,tern.png,People_198_h.jpg,2
+61,Think,Emotion,Non vivant,NonOrg,443488,2,1340,balloon01b.png,Landscapes_004_h.jpg,2
+62,No-Think,Emotion,Non vivant,NonOrg,447523,2,1341,scotchtape.png,Landscapes_007_h.jpg,2
+63,Baseline,Neutral,Vivant,Org,451508,1,794,siamesecat.png,Black.jpg,2
+64,Think,Neutral,Vivant,NonOrg,455043,1,2142,alarmclock02b.png,People_048_h.jpg,2
+65,Baseline,Emotion,Non vivant,Org,460178,1,1023,swallow.png,Black.jpg,2
+66,Think,Emotion,Non vivant,Org,463846,2,1732,cow.png,Landscapes_026_h.jpg,2
+67,Baseline,Neutral,Non vivant,NonOrg,468365,2,1049,banjo.png,Black.jpg,2
+68,Baseline,Emotion,Non vivant,NonOrg,472349,2,1113,scale01b.png,Black.jpg,2
+69,No-Think,Emotion,Vivant,NonOrg,476301,2,2723,airhockeypaddle01a.png,Animals_032_h.jpg,2
+70,Baseline,Neutral,Vivant,Org,481870,1,1592,skunk.png,Black.jpg,2
+71,No-Think,Neutral,Vivant,Org,486372,1,1032,beaver.png,People_155_h.jpg,2
+72,No-Think,Neutral,Non vivant,NonOrg,496709,2,2355,usbcable01b.png,Landscapes_048_h.jpg,2
+73,No-Think,Neutral,Non vivant,Org,502061,1,999,lion.png,Landscapes_038_h.jpg,2
+74,Baseline,Emotion,Vivant,Org,505929,1,1064,rockbass.png,Black.jpg,2
+75,Baseline,Emotion,Vivant,Org,509697,1,2115,stuffedpuffin.png,Black.jpg,2
+76,Think,Emotion,Vivant,NonOrg,514733,1,1642,toytractor01b.png,People_129_h.jpg,2
+77,No-Think,Neutral,Vivant,Org,519368,1,1646,caribou01.png,Faces_308_h.jpg,2
+78,No-Think,Emotion,Vivant,NonOrg,523753,2,1360,bassguitar.png,People_208_h.jpg,2
+79,Baseline,Neutral,Vivant,NonOrg,527871,2,1778,backfloat.png,Black.jpg,2
+80,Think,Neutral,Non vivant,Org,532540,1,972,dromedary.png,Landscapes_073_h.jpg,2
+81,Think,Neutral,Vivant,NonOrg,536341,1,1483,bib.png,Faces_044_h.jpg,2
+82,Think,Neutral,Vivant,Org,540676,1,1237,moose.png,Faces_224_h.jpg,2
+83,No-Think,Emotion,Non vivant,Org,551380,1,1067,toad.png,Objects_138_h.jpg,2
+84,Think,Emotion,Vivant,NonOrg,555265,1,1562,binoculars01b.png,Animals_045_h.jpg,2
+85,Baseline,Emotion,Vivant,NonOrg,559600,2,877,antenna.png,Black.jpg,3
+86,Think,Emotion,Vivant,Org,578674,1,1388,sturgeon.png,Faces_366_h.jpg,3
+87,Baseline,Emotion,Non vivant,Org,582709,1,849,sheep.png,Black.jpg,3
+88,Baseline,Neutral,Vivant,Org,586527,1,593,siamesecat.png,Black.jpg,3
+89,Think,Neutral,Non vivant,Org,589962,2,1391,blackbear.png,Objects_085_h.jpg,3
+90,No-Think,Emotion,Vivant,NonOrg,594297,2,1239,airhockeypaddle01a.png,Animals_032_h.jpg,3
+91,Baseline,Neutral,Non vivant,Org,598499,1,527,raccoon.png,Black.jpg,3
+92,Baseline,Neutral,Vivant,NonOrg,601767,2,628,bicycle.png,Black.jpg,3
+93,Baseline,Emotion,Vivant,Org,605301,1,1387,rockbass.png,Black.jpg,3
+94,Think,Emotion,Non vivant,Org,609636,2,1828,cow.png,Landscapes_026_h.jpg,3
+95,No-Think,Emotion,Vivant,NonOrg,614338,2,2610,bassguitar.png,People_208_h.jpg,3
+96,Think,Neutral,Non vivant,NonOrg,619674,2,1732,alarmclock01.png,Landscapes_049_h.jpg,3
+97,No-Think,Neutral,Non vivant,NonOrg,624392,2,1738,usbcable01b.png,Landscapes_048_h.jpg,3
+98,No-Think,Emotion,Vivant,Org,628927,1,1816,tern.png,People_198_h.jpg,3
+99,Think,Neutral,Vivant,Org,633662,1,2124,moose.png,Faces_224_h.jpg,3
+100,Think,Emotion,Vivant,NonOrg,638648,1,1667,toytractor01b.png,People_129_h.jpg,3
+101,Baseline,Neutral,Vivant,NonOrg,643016,2,1169,backfloat.png,Black.jpg,3
+102,Think,Emotion,Non vivant,NonOrg,647034,2,841,aceofdiamond.png,Objects_109_h.jpg,3
+103,Think,Neutral,Vivant,NonOrg,650819,1,2540,alarmclock02b.png,People_048_h.jpg,3
+104,No-Think,Emotion,Non vivant,Org,656355,2,2120,tortoise01.png,Objects_233_h.jpg,3
+105,No-Think,Emotion,Non vivant,NonOrg,661223,2,1269,toaster02.png,Objects_151_h.jpg,3
+106,No-Think,Neutral,Non vivant,Org,665391,2,1224,lion.png,Landscapes_038_h.jpg,3
+107,Think,Neutral,Vivant,NonOrg,669393,1,2184,bib.png,Faces_044_h.jpg,3
+108,No-Think,Neutral,Non vivant,NonOrg,674462,2,1531,bikehelmet.png,Landscapes_034_h.jpg,3
+109,Think,Emotion,Vivant,Org,678730,1,1647,tiger02.png,People_202_h.jpg,3
+110,No-Think,Neutral,Vivant,NonOrg,683048,2,1355,baseball01a.png,Faces_024_h.jpg,3
+111,No-Think,Neutral,Vivant,NonOrg,687383,2,1804,amphora.png,People_105_h.jpg,3
+112,Baseline,Neutral,Vivant,Org,692185,1,705,skunk.png,Black.jpg,3
+113,No-Think,Neutral,Vivant,Org,695920,1,1112,caribou01.png,Faces_308_h.jpg,3
+114,No-Think,Emotion,Non vivant,NonOrg,699788,2,759,scotchtape.png,Landscapes_007_h.jpg,3
+115,No-Think,Emotion,Vivant,Org,703190,1,1032,saintbernard.png,People_222_h.jpg,3
+116,Think,Emotion,Non vivant,NonOrg,707091,2,1074,balloon01b.png,Landscapes_004_h.jpg,3
+117,Baseline,Neutral,Non vivant,Org,711026,1,715,killerwhale.png,Black.jpg,3
+118,No-Think,Neutral,Non vivant,Org,714727,1,855,hen.png,Objects_082_h.jpg,3
+119,Think,Neutral,Vivant,Org,718479,1,2469,kangaroo.png,People_138_h.jpg,3
+120,No-Think,Emotion,Non vivant,Org,723898,1,1241,toad.png,Objects_138_h.jpg,3
+121,Baseline,Emotion,Non vivant,NonOrg,728133,2,1625,dice02a.png,Black.jpg,3
+122,No-Think,Neutral,Vivant,Org,732668,1,1096,beaver.png,People_155_h.jpg,3
+123,Baseline,Emotion,Non vivant,NonOrg,736553,2,1234,scale01b.png,Black.jpg,3
+124,Think,Emotion,Vivant,NonOrg,740437,1,2215,binoculars01b.png,Animals_045_h.jpg,3
+125,Baseline,Emotion,Non vivant,Org,745523,1,774,swallow.png,Black.jpg,3
+126,Baseline,Emotion,Vivant,Org,749141,1,1491,stuffedpuffin.png,Black.jpg,3
+127,Think,Neutral,Non vivant,Org,753409,2,1672,dromedary.png,Landscapes_073_h.jpg,3
+128,Baseline,Neutral,Non vivant,NonOrg,757728,2,1157,bandage.png,Black.jpg,3
+129,Think,Emotion,Non vivant,Org,761912,2,2414,squirrel.png,Objects_157_h.jpg,3
+130,Think,Neutral,Non vivant,NonOrg,767181,2,1157,armchair01.png,Objects_043_h.jpg,3
+131,Baseline,Emotion,Vivant,NonOrg,777185,2,452,beachpaddle01a.png,Black.jpg,3
+132,No-Think,Neutral,Vivant,NonOrg,780670,2,1761,baseball01a.png,Faces_024_h.jpg,4
+133,No-Think,Emotion,Vivant,Org,785172,1,1678,tern.png,People_198_h.jpg,4
+134,No-Think,Neutral,Non vivant,Org,789690,1,1340,hen.png,Objects_082_h.jpg,4
+135,Baseline,Neutral,Non vivant,NonOrg,794025,2,1016,bandage.png,Black.jpg,4
+136,No-Think,Emotion,Non vivant,NonOrg,797826,2,649,toaster02.png,Objects_151_h.jpg,4
+137,Baseline,Neutral,Vivant,NonOrg,801211,2,498,bicycle.png,Black.jpg,4
+138,Think,Neutral,Vivant,NonOrg,804546,1,976,bib.png,Faces_044_h.jpg,4
+139,No-Think,Neutral,Non vivant,NonOrg,808464,2,1593,usbcable01b.png,Landscapes_048_h.jpg,4
+140,Baseline,Emotion,Vivant,Org,813016,1,1984,rockbass.png,Black.jpg,4
+141,Baseline,Neutral,Non vivant,NonOrg,818034,2,1462,banjo.png,Black.jpg,4
+142,Think,Emotion,Vivant,NonOrg,822419,1,945,binoculars01b.png,Animals_045_h.jpg,4
+143,Think,Emotion,Non vivant,Org,826038,1,924,cow.png,Landscapes_026_h.jpg,4
+144,No-Think,Neutral,Vivant,Org,829672,1,1441,caribou01.png,Faces_308_h.jpg,4
+145,Think,Emotion,Vivant,Org,834074,1,2052,tiger02.png,People_202_h.jpg,4
+146,Think,Emotion,Vivant,Org,838809,1,1523,sturgeon.png,Faces_366_h.jpg,4
+147,Baseline,Emotion,Vivant,NonOrg,843344,2,990,antenna.png,Black.jpg,4
+148,Baseline,Emotion,Non vivant,Org,847329,1,835,swallow.png,Black.jpg,4
+149,Think,Neutral,Non vivant,NonOrg,851164,2,532,armchair01.png,Objects_043_h.jpg,4
+150,No-Think,Neutral,Vivant,Org,854665,1,1238,beaver.png,People_155_h.jpg,4
+151,No-Think,Neutral,Non vivant,Org,858884,1,548,lion.png,Landscapes_038_h.jpg,4
+152,Baseline,Emotion,Non vivant,NonOrg,862135,2,813,dice02a.png,Black.jpg,4
+153,Think,Neutral,Non vivant,Org,865703,2,1415,dromedary.png,Landscapes_073_h.jpg,4
+154,Baseline,Neutral,Vivant,Org,869855,1,1444,skunk.png,Black.jpg,4
+155,Think,Emotion,Non vivant,NonOrg,874123,2,734,aceofdiamond.png,Objects_109_h.jpg,4
+156,No-Think,Emotion,Non vivant,Org,877841,1,1521,toad.png,Objects_138_h.jpg,4
+157,Baseline,Neutral,Vivant,Org,882093,1,985,siamesecat.png,Black.jpg,4
+158,No-Think,Emotion,Non vivant,Org,886111,1,924,tortoise01.png,Objects_233_h.jpg,4
+159,Think,Emotion,Vivant,NonOrg,889762,2,890,toytractor01b.png,People_129_h.jpg,4
+160,Baseline,Emotion,Vivant,NonOrg,893430,2,2074,beachpaddle01a.png,Black.jpg,4
+161,Baseline,Neutral,Non vivant,Org,898349,1,939,killerwhale.png,Black.jpg,4
+162,No-Think,Neutral,Non vivant,NonOrg,902284,2,1600,bikehelmet.png,Landscapes_034_h.jpg,4
+163,Think,Neutral,Vivant,NonOrg,906652,1,980,alarmclock02b.png,People_048_h.jpg,4
+164,Baseline,Neutral,Vivant,NonOrg,910320,2,979,backfloat.png,Black.jpg,4
+165,No-Think,Emotion,Non vivant,NonOrg,914289,2,1332,scotchtape.png,Landscapes_007_h.jpg,4
+166,No-Think,Emotion,Vivant,Org,918640,1,1451,saintbernard.png,People_222_h.jpg,4
+167,No-Think,Emotion,Vivant,NonOrg,922959,2,1640,bassguitar.png,People_208_h.jpg,4
+168,Baseline,Neutral,Non vivant,Org,927460,1,966,raccoon.png,Black.jpg,4
+169,Think,Emotion,Non vivant,Org,931445,2,1194,squirrel.png,Objects_157_h.jpg,4
+170,No-Think,Neutral,Vivant,NonOrg,935547,2,1103,amphora.png,People_105_h.jpg,4
+171,Think,Emotion,Non vivant,NonOrg,939699,2,2491,balloon01b.png,Landscapes_004_h.jpg,4
+172,Baseline,Emotion,Non vivant,Org,945151,1,523,sheep.png,Black.jpg,4
+173,Baseline,Emotion,Non vivant,NonOrg,948419,2,696,scale01b.png,Black.jpg,4
+174,Think,Neutral,Vivant,Org,951937,1,823,kangaroo.png,People_138_h.jpg,4
+175,Think,Neutral,Vivant,Org,955555,1,757,moose.png,Faces_224_h.jpg,4
+176,Think,Neutral,Non vivant,NonOrg,958956,2,507,alarmclock01.png,Landscapes_049_h.jpg,4
+177,Baseline,Emotion,Vivant,Org,962191,1,876,stuffedpuffin.png,Black.jpg,4
+178,Think,Neutral,Non vivant,Org,965792,2,864,blackbear.png,Objects_085_h.jpg,4
+179,No-Think,Emotion,Vivant,NonOrg,969310,2,1499,airhockeypaddle01a.png,Animals_032_h.jpg,4
+180,No-Think,Emotion,Non vivant,Org,973829,1,1032,tortoise01.png,Objects_233_h.jpg,5
+181,Think,Neutral,Non vivant,NonOrg,977897,2,735,armchair01.png,Objects_043_h.jpg,5
+182,Baseline,Emotion,Vivant,NonOrg,1013144,2,1251,antenna.png,Black.jpg,5
+183,Baseline,Neutral,Vivant,NonOrg,1017312,2,938,backfloat.png,Black.jpg,5
+184,Think,Neutral,Vivant,NonOrg,1021280,1,893,bib.png,Faces_044_h.jpg,5
+185,Think,Neutral,Vivant,Org,1024898,1,647,moose.png,Faces_224_h.jpg,5
+186,Baseline,Neutral,Non vivant,Org,1028550,2,1352,killerwhale.png,Black.jpg,5
+187,No-Think,Emotion,Non vivant,Org,1032868,1,962,toad.png,Objects_138_h.jpg,5
+188,Think,Emotion,Non vivant,NonOrg,1036653,2,1069,aceofdiamond.png,Objects_109_h.jpg,5
+189,No-Think,Neutral,Vivant,NonOrg,1040421,2,1957,baseball01a.png,Faces_024_h.jpg,5
+190,Think,Neutral,Non vivant,Org,1045373,1,790,blackbear.png,Objects_085_h.jpg,5
+191,Think,Neutral,Non vivant,Org,1049008,2,1324,dromedary.png,Landscapes_073_h.jpg,5
+192,Baseline,Emotion,Vivant,Org,1053243,1,1436,rockbass.png,Black.jpg,5
+193,Baseline,Emotion,Non vivant,Org,1057428,1,1448,sheep.png,Black.jpg,5
+194,No-Think,Emotion,Non vivant,NonOrg,1061629,2,856,toaster02.png,Objects_151_h.jpg,5
+195,Think,Emotion,Non vivant,Org,1065331,1,793,cow.png,Landscapes_026_h.jpg,5
+196,Think,Emotion,Vivant,NonOrg,1068966,1,1971,toytractor01b.png,People_129_h.jpg,5
+197,Baseline,Neutral,Vivant,Org,1073934,1,1314,siamesecat.png,Black.jpg,5
+198,No-Think,Neutral,Non vivant,NonOrg,1078219,2,1419,bikehelmet.png,Landscapes_034_h.jpg,5
+199,No-Think,Neutral,Non vivant,NonOrg,1082421,2,872,usbcable01b.png,Landscapes_048_h.jpg,5
+200,No-Think,Neutral,Vivant,Org,1086089,1,911,caribou01.png,Faces_308_h.jpg,5
+201,No-Think,Neutral,Vivant,NonOrg,1089841,2,1792,amphora.png,People_105_h.jpg,5
+202,Baseline,Neutral,Non vivant,NonOrg,1094459,2,875,bandage.png,Black.jpg,5
+203,No-Think,Emotion,Vivant,NonOrg,1098294,2,986,bassguitar.png,People_208_h.jpg,5
+204,No-Think,Neutral,Non vivant,Org,1102229,1,1431,lion.png,Landscapes_038_h.jpg,5
+205,Think,Neutral,Vivant,NonOrg,1110665,1,1077,alarmclock02b.png,People_048_h.jpg,5
+206,Think,Neutral,Vivant,Org,1114534,1,1258,kangaroo.png,People_138_h.jpg,5
+207,Think,Emotion,Non vivant,NonOrg,1118768,2,1600,balloon01b.png,Landscapes_004_h.jpg,5
+208,No-Think,Neutral,Non vivant,Org,1123037,1,1122,hen.png,Objects_082_h.jpg,5
+209,No-Think,Emotion,Non vivant,NonOrg,1127005,2,1504,scotchtape.png,Landscapes_007_h.jpg,5
+210,Think,Neutral,Non vivant,NonOrg,1131307,2,2077,alarmclock01.png,Landscapes_049_h.jpg,5
+211,Baseline,Emotion,Non vivant,NonOrg,1136425,2,1039,dice02a.png,Black.jpg,5
+212,Think,Emotion,Vivant,Org,1140177,1,752,sturgeon.png,Faces_366_h.jpg,5
+213,Baseline,Neutral,Non vivant,NonOrg,1143912,2,940,banjo.png,Black.jpg,5
+214,No-Think,Emotion,Vivant,NonOrg,1147713,2,809,airhockeypaddle01a.png,Animals_032_h.jpg,5
+215,No-Think,Emotion,Vivant,Org,1151365,1,1087,saintbernard.png,People_222_h.jpg,5
+216,No-Think,Emotion,Vivant,Org,1155499,1,1509,tern.png,People_198_h.jpg,5
+217,Baseline,Neutral,Non vivant,Org,1160068,1,905,raccoon.png,Black.jpg,5
+218,Baseline,Neutral,Vivant,NonOrg,1163753,2,651,bicycle.png,Black.jpg,5
+219,Baseline,Emotion,Vivant,Org,1167287,1,546,stuffedpuffin.png,Black.jpg,5
+220,No-Think,Neutral,Vivant,Org,1170689,1,1051,beaver.png,People_155_h.jpg,5
+221,Think,Emotion,Vivant,Org,1174440,1,1029,tiger02.png,People_202_h.jpg,5
+222,Baseline,Emotion,Non vivant,NonOrg,1178408,2,648,scale01b.png,Black.jpg,5
+223,Think,Emotion,Non vivant,Org,1182043,2,1251,squirrel.png,Objects_157_h.jpg,5
+224,Baseline,Emotion,Non vivant,Org,1186195,1,817,swallow.png,Black.jpg,5
+225,Baseline,Neutral,Vivant,Org,1189963,1,1340,skunk.png,Black.jpg,5
+226,Think,Emotion,Vivant,NonOrg,1194148,1,1547,binoculars01b.png,Animals_045_h.jpg,5
+227,Think,Emotion,Vivant,NonOrg,1198483,1,2000,binoculars01b.png,Animals_045_h.jpg,6
+228,No-Think,Neutral,Non vivant,NonOrg,1203135,2,1203,bikehelmet.png,Landscapes_034_h.jpg,6
+229,Baseline,Emotion,Vivant,NonOrg,1207070,2,1356,antenna.png,Black.jpg,6
+230,Think,Emotion,Non vivant,NonOrg,1211255,2,1441,aceofdiamond.png,Objects_109_h.jpg,6
+231,No-Think,Neutral,Vivant,NonOrg,1215473,2,2077,amphora.png,People_105_h.jpg,6
+232,Think,Neutral,Vivant,NonOrg,1220341,1,960,alarmclock02b.png,People_048_h.jpg,6
+233,Think,Emotion,Vivant,Org,1224110,1,951,sturgeon.png,Faces_366_h.jpg,6
+234,Think,Neutral,Vivant,Org,1227861,1,1118,moose.png,Faces_224_h.jpg,6
+235,Baseline,Neutral,Vivant,Org,1231896,1,1759,siamesecat.png,Black.jpg,6
+236,Baseline,Neutral,Vivant,NonOrg,1236331,2,657,backfloat.png,Black.jpg,6
+237,Think,Emotion,Non vivant,Org,1239916,2,1045,squirrel.png,Objects_157_h.jpg,6
+238,Think,Neutral,Non vivant,Org,1243801,2,870,dromedary.png,Landscapes_073_h.jpg,6
+239,No-Think,Emotion,Vivant,Org,1247519,1,1068,tern.png,People_198_h.jpg,6
+240,Baseline,Emotion,Vivant,Org,1251487,2,962,rockbass.png,Black.jpg,6
+241,No-Think,Emotion,Vivant,Org,1255372,1,723,saintbernard.png,People_222_h.jpg,6
+242,Think,Neutral,Vivant,Org,1258840,1,1574,kangaroo.png,People_138_h.jpg,6
+243,Baseline,Emotion,Non vivant,NonOrg,1263208,2,770,scale01b.png,Black.jpg,6
+244,No-Think,Neutral,Non vivant,NonOrg,1266760,2,654,usbcable01b.png,Landscapes_048_h.jpg,6
+245,Baseline,Neutral,Non vivant,Org,1270094,1,1827,raccoon.png,Black.jpg,6
+246,Baseline,Neutral,Non vivant,NonOrg,1274896,2,997,bandage.png,Black.jpg,6
+247,Think,Neutral,Non vivant,NonOrg,1278814,2,1494,armchair01.png,Objects_043_h.jpg,6
+248,Baseline,Neutral,Vivant,NonOrg,1282949,2,510,bicycle.png,Black.jpg,6
+249,Baseline,Emotion,Non vivant,NonOrg,1286434,2,504,dice02a.png,Black.jpg,6
+250,No-Think,Emotion,Non vivant,Org,1289752,1,995,tortoise01.png,Objects_233_h.jpg,6
+251,Think,Emotion,Vivant,Org,1293720,1,950,tiger02.png,People_202_h.jpg,6
+252,Baseline,Emotion,Vivant,Org,1297655,1,630,stuffedpuffin.png,Black.jpg,6
+253,No-Think,Emotion,Non vivant,Org,1301290,2,1667,toad.png,Objects_138_h.jpg,6
+254,No-Think,Emotion,Non vivant,NonOrg,1306008,2,1516,scotchtape.png,Landscapes_007_h.jpg,6
+255,No-Think,Neutral,Vivant,NonOrg,1310543,2,1613,baseball01a.png,Faces_024_h.jpg,6
+256,Baseline,Emotion,Vivant,NonOrg,1315012,2,690,beachpaddle01a.png,Black.jpg,6
+257,No-Think,Emotion,Non vivant,NonOrg,1318563,2,800,toaster02.png,Objects_151_h.jpg,6
+258,No-Think,Neutral,Non vivant,Org,1322148,1,802,lion.png,Landscapes_038_h.jpg,6
+259,No-Think,Neutral,Non vivant,Org,1325966,1,901,hen.png,Objects_082_h.jpg,6
+260,No-Think,Emotion,Vivant,NonOrg,1329634,2,755,airhockeypaddle01a.png,Animals_032_h.jpg,6
+261,Think,Emotion,Non vivant,Org,1333169,2,1189,cow.png,Landscapes_026_h.jpg,6
+262,Think,Emotion,Vivant,NonOrg,1337387,1,1091,toytractor01b.png,People_129_h.jpg,6
+263,Baseline,Neutral,Vivant,Org,1341222,1,1339,skunk.png,Black.jpg,6
+264,Baseline,Neutral,Non vivant,Org,1345524,1,611,killerwhale.png,Black.jpg,6
+265,Think,Neutral,Non vivant,Org,1348858,2,908,blackbear.png,Objects_085_h.jpg,6
+266,Think,Neutral,Vivant,NonOrg,1356478,1,1482,bib.png,Faces_044_h.jpg,6
+267,Think,Neutral,Non vivant,NonOrg,1360980,2,832,alarmclock01.png,Landscapes_049_h.jpg,6
+268,Baseline,Emotion,Non vivant,Org,1364831,1,1157,sheep.png,Black.jpg,6
+269,Baseline,Neutral,Non vivant,NonOrg,1368699,2,918,banjo.png,Black.jpg,6
+270,Baseline,Emotion,Non vivant,Org,1372551,1,1993,swallow.png,Black.jpg,6
+271,No-Think,Emotion,Vivant,NonOrg,1377536,2,2277,bassguitar.png,People_208_h.jpg,6
+272,No-Think,Neutral,Vivant,Org,1382555,1,1307,beaver.png,People_155_h.jpg,6
+273,Think,Emotion,Non vivant,NonOrg,1386823,2,821,balloon01b.png,Landscapes_004_h.jpg,6
+274,Baseline,Neutral,Vivant,Org,1390324,1,653,skunk.png,Black.jpg,7
+275,Think,Neutral,Vivant,Org,1393759,1,932,moose.png,Faces_224_h.jpg,7
+276,No-Think,Neutral,Vivant,NonOrg,1397461,2,1347,amphora.png,People_105_h.jpg,7
+277,No-Think,Emotion,Non vivant,Org,1429906,1,1493,toad.png,Objects_138_h.jpg,7
+278,Think,Emotion,Vivant,Org,1434175,1,712,sturgeon.png,Faces_366_h.jpg,7
+279,Baseline,Emotion,Vivant,Org,1437593,1,603,stuffedpuffin.png,Black.jpg,7
+280,No-Think,Emotion,Vivant,Org,1441027,1,1006,saintbernard.png,People_222_h.jpg,7
+281,No-Think,Neutral,Vivant,Org,1444729,1,1674,caribou01.png,Faces_308_h.jpg,7
+282,Think,Neutral,Non vivant,Org,1449447,2,984,dromedary.png,Landscapes_073_h.jpg,7
+283,Baseline,Emotion,Non vivant,Org,1453449,1,534,swallow.png,Black.jpg,7
+284,Think,Neutral,Vivant,NonOrg,1456850,1,982,alarmclock02b.png,People_048_h.jpg,7
+285,Baseline,Neutral,Non vivant,Org,1460735,1,1249,killerwhale.png,Black.jpg,7
+286,Baseline,Neutral,Vivant,Org,1464670,1,924,siamesecat.png,Black.jpg,7
+287,Think,Neutral,Non vivant,NonOrg,1468405,2,495,alarmclock01.png,Landscapes_049_h.jpg,7
+288,Baseline,Emotion,Vivant,NonOrg,1471723,2,508,beachpaddle01a.png,Black.jpg,7
+289,Think,Neutral,Non vivant,Org,1475274,2,758,blackbear.png,Objects_085_h.jpg,7
+290,No-Think,Neutral,Non vivant,Org,1479076,1,681,hen.png,Objects_082_h.jpg,7
+291,No-Think,Emotion,Vivant,NonOrg,1482577,2,2099,bassguitar.png,People_208_h.jpg,7
+292,Think,Neutral,Vivant,Org,1487429,1,686,kangaroo.png,People_138_h.jpg,7
+293,Think,Emotion,Vivant,NonOrg,1490897,1,947,binoculars01b.png,Animals_045_h.jpg,7
+294,Think,Emotion,Non vivant,NonOrg,1494849,2,687,aceofdiamond.png,Objects_109_h.jpg,7
+295,No-Think,Neutral,Non vivant,NonOrg,1498233,2,687,bikehelmet.png,Landscapes_034_h.jpg,7
+296,Baseline,Neutral,Non vivant,NonOrg,1501785,2,943,bandage.png,Black.jpg,7
+297,Think,Emotion,Non vivant,NonOrg,1505719,2,704,balloon01b.png,Landscapes_004_h.jpg,7
+298,No-Think,Neutral,Non vivant,NonOrg,1509421,2,414,usbcable01b.png,Landscapes_048_h.jpg,7
+299,Baseline,Neutral,Vivant,NonOrg,1512605,2,698,backfloat.png,Black.jpg,7
+300,Baseline,Emotion,Non vivant,NonOrg,1515957,2,765,scale01b.png,Black.jpg,7
+301,No-Think,Emotion,Vivant,NonOrg,1519558,2,1209,airhockeypaddle01a.png,Animals_032_h.jpg,7
+302,No-Think,Emotion,Vivant,Org,1523827,1,703,tern.png,People_198_h.jpg,7
+303,No-Think,Emotion,Non vivant,NonOrg,1527445,2,1333,scotchtape.png,Landscapes_007_h.jpg,7
+304,Think,Emotion,Non vivant,Org,1531813,2,1691,cow.png,Landscapes_026_h.jpg,7
+305,Think,Emotion,Non vivant,Org,1540100,1,775,squirrel.png,Objects_157_h.jpg,7
+306,No-Think,Neutral,Vivant,NonOrg,1543901,2,876,baseball01a.png,Faces_024_h.jpg,7
+307,No-Think,Neutral,Vivant,Org,1547653,1,2074,beaver.png,People_155_h.jpg,7
+308,No-Think,Emotion,Non vivant,Org,1552621,1,763,tortoise01.png,Objects_233_h.jpg,7
+309,Baseline,Emotion,Vivant,NonOrg,1560107,2,939,antenna.png,Black.jpg,7
+310,Baseline,Emotion,Non vivant,NonOrg,1563876,2,1880,dice02a.png,Black.jpg,7
+311,Think,Neutral,Non vivant,NonOrg,1568811,2,1869,armchair01.png,Objects_043_h.jpg,7
+312,Think,Emotion,Vivant,NonOrg,1573413,1,945,toytractor01b.png,People_129_h.jpg,7
+313,Think,Neutral,Vivant,NonOrg,1577247,1,1267,bib.png,Faces_044_h.jpg,7
+314,Baseline,Neutral,Non vivant,NonOrg,1581266,2,460,banjo.png,Black.jpg,7
+315,Baseline,Emotion,Non vivant,Org,1584734,1,843,sheep.png,Black.jpg,7
+316,Baseline,Neutral,Non vivant,Org,1592770,1,466,raccoon.png,Black.jpg,7
+317,Baseline,Neutral,Vivant,NonOrg,1596272,2,757,bicycle.png,Black.jpg,7
+318,No-Think,Neutral,Non vivant,Org,1599906,1,890,lion.png,Landscapes_038_h.jpg,7
+319,Baseline,Neutral,Vivant,Org,1603674,1,1481,siamesecat.png,Black.jpg,8
+320,Think,Neutral,Vivant,Org,1607859,1,987,moose.png,Faces_224_h.jpg,8
+321,Baseline,Emotion,Non vivant,NonOrg,1611577,2,1519,dice02a.png,Black.jpg,8
+322,Think,Neutral,Non vivant,NonOrg,1616079,2,791,armchair01.png,Objects_043_h.jpg,8
+323,Baseline,Emotion,Vivant,NonOrg,1619564,2,1350,antenna.png,Black.jpg,8
+324,Think,Neutral,Vivant,NonOrg,1623866,1,1066,alarmclock02b.png,People_048_h.jpg,8
+325,Think,Neutral,Non vivant,Org,1627734,2,1488,dromedary.png,Landscapes_073_h.jpg,8
+326,Think,Emotion,Vivant,Org,1632019,1,1738,sturgeon.png,Faces_366_h.jpg,8
+327,No-Think,Emotion,Non vivant,Org,1636804,1,1488,toad.png,Objects_138_h.jpg,8
+328,Baseline,Neutral,Vivant,NonOrg,1640989,2,738,backfloat.png,Black.jpg,8
+329,Baseline,Neutral,Vivant,Org,1644724,1,1093,skunk.png,Black.jpg,8
+330,Think,Emotion,Non vivant,Org,1648725,2,1323,cow.png,Landscapes_026_h.jpg,8
+331,Baseline,Emotion,Vivant,Org,1652760,1,847,rockbass.png,Black.jpg,8
+332,Think,Neutral,Non vivant,NonOrg,1656445,2,1118,alarmclock01.png,Landscapes_049_h.jpg,8
+333,Think,Neutral,Vivant,Org,1660530,1,574,kangaroo.png,People_138_h.jpg,8
+334,Think,Emotion,Vivant,NonOrg,1667699,1,878,toytractor01b.png,People_129_h.jpg,8
+335,No-Think,Emotion,Vivant,NonOrg,1671418,2,2161,bassguitar.png,People_208_h.jpg,8
+336,No-Think,Emotion,Non vivant,NonOrg,1676386,2,2074,scotchtape.png,Landscapes_007_h.jpg,8
+337,No-Think,Neutral,Non vivant,Org,1684473,1,617,lion.png,Landscapes_038_h.jpg,8
+338,Think,Neutral,Non vivant,Org,1691792,2,1830,blackbear.png,Objects_085_h.jpg,8
+339,No-Think,Neutral,Non vivant,NonOrg,1700896,2,870,bikehelmet.png,Landscapes_034_h.jpg,8
+340,Think,Emotion,Non vivant,NonOrg,1704480,2,1987,aceofdiamond.png,Objects_109_h.jpg,8
+341,Baseline,Emotion,Vivant,NonOrg,1709382,2,1637,beachpaddle01a.png,Black.jpg,8
+342,No-Think,Emotion,Vivant,Org,1713817,1,1246,saintbernard.png,People_222_h.jpg,8
+343,Think,Emotion,Vivant,NonOrg,1718019,1,730,binoculars01b.png,Animals_045_h.jpg,8
+344,No-Think,Neutral,Vivant,NonOrg,1721720,2,1688,baseball01a.png,Faces_024_h.jpg,8
+345,Baseline,Emotion,Non vivant,Org,1726206,1,1187,swallow.png,Black.jpg,8
+346,Baseline,Emotion,Non vivant,Org,1730140,1,894,sheep.png,Black.jpg,8
+347,Baseline,Neutral,Non vivant,Org,1733709,1,537,raccoon.png,Black.jpg,8
+348,No-Think,Emotion,Vivant,Org,1737277,2,1834,tern.png,People_198_h.jpg,8
+349,Baseline,Neutral,Non vivant,NonOrg,1742045,2,990,banjo.png,Black.jpg,8
+350,Think,Emotion,Vivant,Org,1745763,1,839,tiger02.png,People_202_h.jpg,8
+351,No-Think,Neutral,Vivant,Org,1753583,1,1029,beaver.png,People_155_h.jpg,8
+352,No-Think,Neutral,Vivant,NonOrg,1757651,2,1014,amphora.png,People_105_h.jpg,8
+353,Baseline,Neutral,Non vivant,Org,1761703,1,1719,killerwhale.png,Black.jpg,8
+354,Baseline,Emotion,Vivant,Org,1766188,1,763,stuffedpuffin.png,Black.jpg,8
+355,No-Think,Neutral,Vivant,Org,1769806,2,2670,caribou01.png,Faces_308_h.jpg,8
+356,No-Think,Neutral,Non vivant,NonOrg,1775175,2,1905,usbcable01b.png,Landscapes_048_h.jpg,8
+357,Baseline,Neutral,Vivant,NonOrg,1779877,2,486,bicycle.png,Black.jpg,8
+358,Think,Emotion,Non vivant,NonOrg,1783211,2,748,balloon01b.png,Landscapes_004_h.jpg,8
+359,No-Think,Neutral,Non vivant,Org,1786896,1,796,hen.png,Objects_082_h.jpg,8
+360,Baseline,Emotion,Non vivant,NonOrg,1790531,2,533,scale01b.png,Black.jpg,8
