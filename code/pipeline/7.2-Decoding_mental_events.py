@@ -46,7 +46,20 @@ def mental_events(exclude_peak: int):
     exclude_peak: int
         Time window to exclude before intrusions (* 10ms).
 
+    Returns
+    -------
+    The script is saving two data frames:
+
+        * `intrusion_df`: The mean of mental events per trial averaged over experimental
+        blocks (1-2, 3-4. 5-6, 7-8).
+        * `intrusionTiming_df`: The timing and length of each intrusion for each
+        participant. The column `Timing` log the timingof events, in miliseconds after
+        the trial start.
+
     """
+
+    intrusion_df = pd.DataFrame([])  # Intrusion count
+    intrusionTiming_df = pd.DataFrame([])  # Intrusion timing
 
     for condition in ["Think", "No-Think"]:
 
@@ -56,8 +69,6 @@ def mental_events(exclude_peak: int):
 
         final_df = final_df[final_df.Condition == condition]
 
-        intrusion_df = pd.DataFrame([])  # Intrusion count
-        intrusionTiming_df = pd.DataFrame([])  # Intrusion timing
 
         for subject in names:
 
@@ -111,7 +122,7 @@ def mental_events(exclude_peak: int):
                                             "Emotion": tnt_df["Cond2"].iloc[ii],
                                             "Block": tnt_df["ListImage.Cycle"].iloc[ii],
                                             "Image": tnt_df["ImageFond"].iloc[ii],
-                                            "Intrusion": (idx * 10) - 200,
+                                            "Timing": (idx * 10) - 200,
                                             "Length": length * 10,
                                         },
                                         ignore_index=True,
@@ -129,7 +140,7 @@ def mental_events(exclude_peak: int):
                                             "Emotion": tnt_df["Cond2"].iloc[ii],
                                             "Block": tnt_df["ListImage.Cycle"].iloc[ii],
                                             "Image": tnt_df["ImageFond"].iloc[ii],
-                                            "Intrusion": (idx * 10) - 200,
+                                            "Timing": (idx * 10) - 200,
                                             "Length": length * 10,
                                         },
                                         ignore_index=True,
@@ -149,7 +160,7 @@ def mental_events(exclude_peak: int):
                                             "Emotion": tnt_df["Cond2"].iloc[ii],
                                             "Block": tnt_df["ListImage.Cycle"].iloc[ii],
                                             "Image": tnt_df["ImageFond"].iloc[ii],
-                                            "Intrusion": (idx * 10) - 200,
+                                            "Timing": (idx * 10) - 200,
                                             "Length": length * 10,
                                         },
                                         ignore_index=True,
@@ -169,7 +180,7 @@ def mental_events(exclude_peak: int):
                                             "Emotion": tnt_df["Cond2"].iloc[ii],
                                             "Block": tnt_df["ListImage.Cycle"].iloc[ii],
                                             "Image": tnt_df["ImageFond"].iloc[ii],
-                                            "Intrusion": (idx * 10) - 200,
+                                            "Timing": (idx * 10) - 200,
                                             "Length": length * 10,
                                         },
                                         ignore_index=True,
@@ -191,7 +202,7 @@ def mental_events(exclude_peak: int):
                                             "Emotion": tnt_df["Cond2"].iloc[ii],
                                             "Block": tnt_df["ListImage.Cycle"].iloc[ii],
                                             "Image": tnt_df["ImageFond"].iloc[ii],
-                                            "Intrusion": (idx * 10) - 200,
+                                            "Timing": (idx * 10) - 200,
                                             "Length": length * 10,
                                         },
                                         ignore_index=True,
@@ -252,8 +263,8 @@ def mental_events(exclude_peak: int):
             plt.savefig(f"{root}Results/Decoding/{subject}_{condition}_mental-events.png")
             plt.close()
 
-        intrusion_df.to_csv(f"{root}Results/Decoding/mental_events_{condition}.txt")
-        intrusionTiming_df.to_csv(f"{root}Results/Decoding/mental_events_timing_{condition}.txt")
+        intrusion_df.to_csv(f"{root}Results/Decoding/mental_events.txt")
+        intrusionTiming_df.to_csv(f"{root}Results/Decoding/mental_events_timing.txt")
 
 
 # %% Run intrusion decoding
