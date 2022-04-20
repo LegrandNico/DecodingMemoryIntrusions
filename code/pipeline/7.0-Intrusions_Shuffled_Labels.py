@@ -54,7 +54,7 @@ def shuffled_training_labels(subject: str, n_boot: int = 200) -> np.ndarray:
     Parameters
     ----------
     subject : str
-        subject reference (e.g. '31NLI')
+        The participant ID.
     n_boot : int
         Number of permutation.
 

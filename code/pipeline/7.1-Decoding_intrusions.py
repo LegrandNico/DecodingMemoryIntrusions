@@ -266,7 +266,9 @@ def testing_decoder(
                         np.asarray(total_count) > 0
                     )  # Only prediction non-intrusion if npeaks == 0
 
-                    try:
+                    if condition == "No-Think":
+                        # For No-Think condition, compute the ROC-AUC score
+
                         auc = roc_auc_score(labels, pred)  # Evaluate model accuracy
                         if auc > auc_time:  # Only keep the best model.
                             auc_time = auc
@@ -274,48 +276,67 @@ def testing_decoder(
                                 auc_final = auc_time
                                 cm = confusion_matrix(labels, pred)
                                 cm = cm.astype("float") / cm.sum(axis=1)[:, np.newaxis]
-                    except ValueError:
-                        auc = None
+                        
+                        output_df = output_df.append(
+                            pd.DataFrame(
+                                {
+                                    "Subject": subject,
+                                    "Condition": condition,
+                                    "Time": time,
+                                    "Length": length,
+                                    "AUC": auc_time,
+                                    "Percent_intrusion": None,
+                                },
+                                index=[0],
+                            ),
+                            ignore_index=True,
+                        )
 
-                    output_df = output_df.append(
-                        pd.DataFrame(
-                            {
-                                "Subject": subject,
-                                "Condition": condition,
-                                "Time": time,
-                                "Length": length,
-                                "AUC": auc_time,
-                            },
-                            index=[0],
-                        ),
-                        ignore_index=True,
-                    )
-            cm_final.append(cm)
-            plt.rcParams["figure.figsize"] = [6, 6]
-            sns.set_context("notebook")
-            plt.imshow(cm, interpolation="nearest", cmap=plt.cm.Blues, vmin=0.3, vmax=0.7)
-            plt.title("AUC: " + str(auc_final), size=20)
-            tick_marks = np.arange(2)
-            plt.xticks(tick_marks, ["Non-Intrusions", "Intrusion"])
-            plt.yticks(tick_marks, ["Non-Intrusions", "Intrusion"], rotation=90)
+                        # Save decoding plot for this participant
+                        cm_final.append(cm)
+                        plt.rcParams["figure.figsize"] = [6, 6]
+                        sns.set_context("notebook")
+                        plt.imshow(cm, interpolation="nearest", cmap=plt.cm.Blues, vmin=0.3, vmax=0.7)
+                        plt.title("AUC: " + str(auc_final), size=20)
+                        tick_marks = np.arange(2)
+                        plt.xticks(tick_marks, ["Non-Intrusions", "Intrusion"])
+                        plt.yticks(tick_marks, ["Non-Intrusions", "Intrusion"], rotation=90)
 
-            fmt = ".2f"
-            for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
-                plt.text(
-                    j,
-                    i,
-                    format(cm[i, j], fmt),
-                    size=15,
-                    weight="bold",
-                    horizontalalignment="center",
-                    color="white" if cm[i, j] > 0.5 else "black",
-                )
-            plt.colorbar()
-            plt.ylabel("True label", size=20, fontweight="bold")
-            plt.xlabel("Predicted label", size=20, fontweight="bold")
-            plt.tight_layout()
-            plt.savefig(f"{root}Results/Decoding/{subject}_{condition}_tnt-decoding.png")
-            plt.close()
+                        fmt = ".2f"
+                        for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
+                            plt.text(
+                                j,
+                                i,
+                                format(cm[i, j], fmt),
+                                size=15,
+                                weight="bold",
+                                horizontalalignment="center",
+                                color="white" if cm[i, j] > 0.5 else "black",
+                            )
+                        plt.colorbar()
+                        plt.ylabel("True label", size=20, fontweight="bold")
+                        plt.xlabel("Predicted label", size=20, fontweight="bold")
+                        plt.tight_layout()
+                        plt.savefig(f"{root}Results/Decoding/{subject}_{condition}_tnt-decoding.png")
+                        plt.close()
+
+                    elif condition == "Think":
+
+                        # For the Think condition, compute the % of intrusions
+                        output_df = output_df.append(
+                            pd.DataFrame(
+                                {
+                                    "Subject": subject,
+                                    "Condition": condition,
+                                    "Time": time,
+                                    "Length": length,
+                                    "AUC": None,
+                                    "Percent_intrusion": sum(pred) / len(labels) * 100,
+                                },
+                                index=[0],
+                            ),
+                            ignore_index=True,
+                        )
 
     # Save results
     output_df.to_csv(root + "raws.txt")
@@ -324,6 +345,16 @@ def testing_decoder(
     # Select best decoders
     idx = output_df.groupby(["Subject", "Condition"])["AUC"].transform(max) == output_df["AUC"]
     final_df = output_df[idx]
+
+    # Add the corresponding Think condition given the best decoder for intrusions
+    for subject in names:
+        time = final_df[(final_df.Subject == subject)].Time.values[0]
+        length = final_df[(final_df.Subject == subject)].Length.values[0]
+        final_df = final_df.append([
+            output_df[
+                (output_df.Condition == "Think") & (output_df.Subject == subject) & (output_df.Time == time) & (output_df.Length == length)
+                ]
+        ])
 
     final_df.to_csv(root + "Classifiers.txt")
 
@@ -363,7 +394,7 @@ if __name__ == "__main__":
     plt.tight_layout()
     plt.ylabel("True label", size=20, fontweight="bold")
     plt.xlabel("Predicted label", size=20, fontweight="bold")
-    plt.savefig("TNT_decoding_CM.svg", dpi=300)
+    plt.savefig(f"{root}Results/Decoding/TNT_decoding_CM.svg", dpi=300)
     plt.close()
 
     # AUC stripplot
@@ -374,5 +405,5 @@ if __name__ == "__main__":
     )
     plt.axhline(y=0.5, linestyle="--", color="r")
     plt.ylabel("AUC", size=25)
-    plt.savefig("TNT_decoding_AUC.svg", dpi=300)
+    plt.savefig(f"{root}Results/Decoding/TNT_decoding_AUC.svg", dpi=300)
     plt.close()
