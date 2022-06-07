@@ -15,7 +15,6 @@ from sklearn.metrics import confusion_matrix, roc_auc_score
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
-#root = "D:/EEG_wd/Machine_learning/"
 root = "/home/nicolas/git/DecodingMemoryIntrusions/data/"
 
 # Subjects ID

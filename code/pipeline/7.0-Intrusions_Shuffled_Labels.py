@@ -9,7 +9,6 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import StandardScaler
 
-# root = "D:/EEG_wd/Machine_learning/"
 root = "/home/nicolas/git/DecodingMemoryIntrusions/data/"
 
 # Subjects ID
