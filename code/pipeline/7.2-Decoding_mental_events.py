@@ -6,7 +6,6 @@ import pandas as pd
 import peakutils
 import seaborn as sns
 
-#root = "D:/EEG_wd/Machine_learning/"
 root = "/home/nicolas/git/DecodingMemoryIntrusions/data/"
 
 # Subjects ID
