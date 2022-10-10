@@ -1,3 +1,6 @@
+
+[![DOI](https://zenodo.org/badge/180201041.svg)](https://zenodo.org/badge/latestdoi/180201041)
+
 # Decoding memory intrusions from early visual interference
 
 Data and code for the following paper:
@@ -57,12 +60,10 @@ Scripts and jupyter notebooks are stored in the `code` folder.
 ![Figure 3: ](./figures/Figure3.png)
 **Figure 3. Decoding memory intrusion during the Think/No-Think task.** We predicted the probability of an intrusion during memory suppression (i.e. No-Think trial of the TNT phase). We used the classifiers trained on the EEG recording from the attention task and from the time window which maximalizes decoding accuracy (i.e. 250-500 ms). For each attentional time-point (only one time-point is illustrated here), we labelled as intrusion the peaks of probability higher than the 95th percentile of the null distribution (see Method). The resulting binary vector was smoothed with a Gaussian kernel (with full-half width at a maximum of 200 ms), producing a time-course of mental event reactivation describing the intrusive memory strength across the suppression cue. The whole process was repeated across all No-Think trials, and ​​we then computed the resulting AUC for each time-point using the TNT subjective reports as labels and the probability of an intrusion across trials as a vector of classifier predictions. We repeated the whole process for each attentional time-point and selected for each participant the attentional time-point with the maximal AUC. The intrusive memory strength or the proportion of decoded intrusion across time-points used in follow-up analyses were also derived from the attentional time-point with the maximal AUC.
 
-
 ### Figure 4
 
 ![Figure 4: ](./figures/Figure4.png)
 **Figure 4. Decoding performance of intrusion reports during memory suppression. A.** Performances of the Attentional and Perceptual classification models reported here as the area under the curve (AUC). The Attentional model (blue line) detected intrusive memories using a classifier trained on reflexive attention (i.e. Intrusion vs Non-Intrusion during the attentional task; see Figure 1A). The Perceptual model (green line) was trained to detect intrusive memory based on the voluntarily perceptual processing of the scene (i.e. Exploration vs Non-Intrusion during the attentional task; see Figure 1A). The red area represents the significant differences between these two classifiers, corrected for multiple comparisons across time-points (p-corrected<.05). The dashed blue line represents the decoding peak of the Attentional model **B.** Analyses of the intrusive memory strength (see Figure 3) confirmed that the increase in classification performances for the Attentional model was characterized by an increase in intrusive mental events for trials reported as intrusive compared with those labelled as non-intrusive by the participants (significant differences corrected for multiple time-points reflected by the red areas). The error bars represent the bootstrapped 95% CI.
-
 
 ### Figure 5
 
